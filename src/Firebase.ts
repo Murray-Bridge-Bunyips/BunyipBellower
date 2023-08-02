@@ -32,14 +32,13 @@ try {
     const firebaseConfig = {
         // Exposure of these Firebase API configurations are not a security risk,
         // and as such will not be put into a system environment variable.
-        apiKey: "AIzaSyDtsmCd5dKHhW5nqS_tlZSgrbmADdheHtI",
-        authDomain: "bunyips-chatapp.firebaseapp.com",
-        projectId: "bunyips-chatapp",
-        databaseURL: "https://bunyips-chatapp-default-rtdb.asia-southeast1.firebasedatabase.app",
-        storageBucket: "bunyips-chatapp.appspot.com",
-        messagingSenderId: "310936661036",
-        appId: "1:310936661036:web:b654ba95b6414966c8f589",
-        measurementId: "G-JN89PXFP9N",
+        apiKey: "AIzaSyClq6xUOEayOkAYXx0OJbiiFU1D2PFvXq4",
+        authDomain: "bunyipbellower.firebaseapp.com",
+        projectId: "bunyipbellower",
+        databaseURL: "https://bunyipbellower-default-rtdb.asia-southeast1.firebasedatabase.app",
+        storageBucket: "bunyipbellower.appspot.com",
+        messagingSenderId: "1021407241018",
+        appId: "1:1021407241018:web:381d79b51804b683166603"
     };
     app = initializeApp(firebaseConfig);
 }
