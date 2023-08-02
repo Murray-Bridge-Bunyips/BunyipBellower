@@ -46,7 +46,7 @@ function Login() {
                     <br />
                     <footer>
                         Copyright (c) Lucas Bubner, Lachlan Paul, 2023 <br />
-                        <a href="https://github.com/hololb/BunyipBellower/">Source code</a>
+                        <a href="https://github.com/Murray-Bridge-Bunyips/BunyipBellower">Source code</a>
                     </footer>
                 </div>
             </div>

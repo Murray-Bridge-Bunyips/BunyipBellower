@@ -19,7 +19,7 @@ function About() {
                 <div className="inner">
                     <h2 className="heading text-center">The Bunyip Bellower Project</h2>
                     <p className="font-italic text-center">
-                        A custom-made chat application for the members of the Murray Bridge Bunyip.
+                        A custom solution to tackling communication issues in social club settings.
                     </p>
                     <table className="abtable">
                         <tbody>
@@ -73,7 +73,7 @@ function About() {
                             title="Source code"
                             alt="GitHub source"
                             src="https://github.githubassets.com/favicons/favicon-dark.png"
-                            onClick={() => window.open("https://github.com/hololb/BunyipBellower", "_blank")}
+                            onClick={() => window.open("https://github.com/Murray-Bridge-Bunyips/BunyipBellower", "_blank")}
                         />
                         &nbsp; || &nbsp;
                         <img
@@ -113,7 +113,7 @@ function About() {
                         <a
                             rel="noreferrer"
                             target="_blank"
-                            href="https://raw.githubusercontent.com/hololb/BunyipBellower/prod/LICENSE"
+                            href="https://raw.githubusercontent.com/Murray-Bridge-Bunyips/BunyipBellower/prod/LICENSE"
                         >
                             MIT License
                         </a>

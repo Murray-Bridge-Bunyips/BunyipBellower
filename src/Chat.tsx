@@ -36,7 +36,7 @@ function Chat() {
                     alert(
                         `Access denied to ${
                             auth.currentUser!.email
-                        }. You do not have sufficient permissions to view this chat. Please email lbubner21@mbhs.sa.edu.au to continue.`
+                        }. You do not have sufficient permissions to view this chat.`
                     );
                 } catch (e) {
                     // Any errors from the alert will be from the non-presence of auth.currentUser.email, meaning we have signed out.
@@ -100,8 +100,8 @@ function Chat() {
         }, 1000);
     }, []);
 
-    // Set the state of the hidden variable depending on whether the user is on the Bellower or not.
-    // We don't want to notify that there's a new message if they're already on the Bellower.
+    // Set the state of the hidden variable depending on whether the user is on the chat app or not.
+    // We don't want to notify that there's a new message if they're already on the chat app.
     const [hidden, setHidden] = useState(false);
     useEffect(() => {
         document.addEventListener("visibilitychange", () => {

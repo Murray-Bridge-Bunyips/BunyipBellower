@@ -90,7 +90,7 @@ function errorHandler(err: any): void {
         );
     } else {
         alert(
-            "Sorry! An error occurred attempting to perform the operation you were requesting. If this persists, please contact lbubner21@mbhs.sa.edu.au with this information:\n\n" +
+            "Sorry! An error occurred attempting to perform the operation you were requesting. Error message:\n\n" +
                 err +
                 "\n\nYour window will be reloaded in 5 seconds."
         );

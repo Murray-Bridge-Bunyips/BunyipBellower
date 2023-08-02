@@ -25,7 +25,7 @@ function App() {
         const time = new Date(Date.now());
         if (time.getMonth() + 1 === 4 && time.getDate() === 1 && user) {
             alert(
-                "WARNING: This Bellower has been noted by authorities as being in use by major War Criminals, proceed with extreme caution and report any suspicious actvity to // TODO: Contact Info"
+                "WARNING: This chat app has been noted by authorities as being in use by major War Criminals, proceed with extreme caution and report any suspicious actvity to // TODO: Contact Info"
             );
         }
     }, [user]);
@@ -63,8 +63,7 @@ function App() {
             </div>
             {longConnect && (
                 <p className="disc">
-                    This seems to be taking a while. <br /> Check your internet connection, and if this persists, please
-                    contact lbubner21@mbhs.sa.edu.au.
+                    This seems to be taking a while. <br /> Please check your internet connection.
                 </p>
             )}
         </>

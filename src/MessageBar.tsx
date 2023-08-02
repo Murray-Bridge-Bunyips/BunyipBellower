@@ -78,8 +78,7 @@ function MessageBar() {
                     ) : (
                         <div className="msginput nomsg">
                             <p>
-                                You do not have permission to send any messages. Please contact lbubner21@mbhs.sa.edu.au
-                                to continue.
+                                You do not have permission to send any messages.
                             </p>
                         </div>
                     )}

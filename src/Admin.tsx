@@ -191,8 +191,7 @@ function Admin() {
                                 &times;
                             </span>
                             <p>
-                                Insufficient permissions to access the admin module. <br /> Please contact
-                                lbubner21@mbhs.sa.edu.au for further assistance.
+                                Insufficient permissions to access the admin module.
                             </p>
                         </>
                     )}
