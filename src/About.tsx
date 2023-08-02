@@ -17,9 +17,9 @@ function About() {
             <>
                 <div className="outer" onClick={tclose} />
                 <div className="inner">
-                    <h2 className="heading text-center">The Bunyips Chatapp Project</h2>
+                    <h2 className="heading text-center">The Bunyip Bellower Project</h2>
                     <p className="font-italic text-center">
-                        A custom-made chat application for the members of the Murray Bridge Bunyips.
+                        A custom-made chat application for the members of the Murray Bridge Bunyip.
                     </p>
                     <table className="abtable">
                         <tbody>
@@ -73,7 +73,7 @@ function About() {
                             title="Source code"
                             alt="GitHub source"
                             src="https://github.githubassets.com/favicons/favicon-dark.png"
-                            onClick={() => window.open("https://github.com/hololb/BunyipsChatapp", "_blank")}
+                            onClick={() => window.open("https://github.com/hololb/BunyipBellower", "_blank")}
                         />
                         &nbsp; || &nbsp;
                         <img
@@ -109,11 +109,11 @@ function About() {
                     </div>
                     <br />
                     <h6 className="text-center">
-                        Copyright (c) Lucas Bubner 2023 under the{" "}
+                        Copyright (c) Lucas Bubner, Lachlan Paul, 2023 under the{" "}
                         <a
                             rel="noreferrer"
                             target="_blank"
-                            href="https://raw.githubusercontent.com/hololb/BunyipsChatapp/prod/LICENSE"
+                            href="https://raw.githubusercontent.com/hololb/BunyipBellower/prod/LICENSE"
                         >
                             MIT License
                         </a>

@@ -1,7 +1,7 @@
 {
-    "short_name": "bunyips-chatapp",
-    "name": "Bunyips Chatapp",
-    "description": "A custom-made chat application for the members of the Murray Bridge Bunyips.",
+    "short_name": "Bunyip-Bellower",
+    "name": "Bunyip Bellower",
+    "description": "A custom-made chat application for the members of the Murray Bridge Bunyip.",
     "icons": [
         {
             "src": "favicon.ico",

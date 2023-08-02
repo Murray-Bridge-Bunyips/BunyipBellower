@@ -100,8 +100,8 @@ function Chat() {
         }, 1000);
     }, []);
 
-    // Set the state of the hidden variable depending on whether the user is on the chatapp or not.
-    // We don't want to notify that there's a new message if they're already on the chatapp.
+    // Set the state of the hidden variable depending on whether the user is on the Bellower or not.
+    // We don't want to notify that there's a new message if they're already on the Bellower.
     const [hidden, setHidden] = useState(false);
     useEffect(() => {
         document.addEventListener("visibilitychange", () => {
@@ -132,7 +132,7 @@ function Chat() {
             document.title = "NEW MESSAGE!";
             if (favicon) favicon.href = "alert.ico";
         } else {
-            document.title = "Bunyips Chatapp";
+            document.title = "Bunyip Bellower";
             if (favicon) favicon.href = "favicon.ico";
         }
     }, [newMessage, hidden]);
@@ -152,7 +152,7 @@ function Chat() {
                         ) : (
                             <>
                                 <p className="top">
-                                    Welcome to the Bunyips Chatapp! <br /> This is the start of the application's
+                                    Welcome to the Bunyip Bellower! <br /> This is the start of the application's
                                     history.
                                 </p>
                                 <hr />

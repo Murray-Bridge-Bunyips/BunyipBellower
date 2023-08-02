@@ -26,11 +26,11 @@ function Login() {
                 </ul>
                 <img style={{ borderRadius: "15px" }} src="/anim.svg" alt="Background animation" />
             </div>
-            <img className="clubimg" src="/clubimgblur.png" alt="Murray Bridge Bunyips club" />
+            <img className="clubimg" src="/clubimgblur.png" alt="Murray Bridge Bunyip club" />
             <div className="login center">
                 <div className="login-inner">
                     <h4>Welcome to the</h4>
-                    <h2>Bunyips Chatapp</h2>
+                    <h2>Bunyip Bellower</h2>
                     {/* Use Semantic Versioning (semver) here to indicate the current application version */}
                     <i>Version v1.1.0</i>
                     <br /> <br />
@@ -45,8 +45,8 @@ function Login() {
                     </h6>
                     <br />
                     <footer>
-                        Copyright (c) 2023 Lucas Bubner <br />
-                        <a href="https://github.com/hololb/BunyipsChatapp/">Source code</a>
+                        Copyright (c) Lucas Bubner, Lachlan Paul, 2023 <br />
+                        <a href="https://github.com/hololb/BunyipBellower/">Source code</a>
                     </footer>
                 </div>
             </div>

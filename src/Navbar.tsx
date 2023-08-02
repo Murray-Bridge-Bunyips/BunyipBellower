@@ -85,7 +85,7 @@ function Navbar() {
                 <BBQ />
                 <Users online={onlineUsers} offline={offlineUsers} unknown={unknownUsers} />
             </div>
-            <h4 className="productname">Bunyips Chatapp</h4>
+            <h4 className="productname">Bunyip Bellower</h4>
             <p className="currenttime">
                 <i style={{ fontSize: "12px", color: "#e0e0e0" }}>Lucas Bubner, Lachlan Paul, 2023</i>
                 <br />

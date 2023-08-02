@@ -25,7 +25,7 @@ function App() {
         const time = new Date(Date.now());
         if (time.getMonth() + 1 === 4 && time.getDate() === 1 && user) {
             alert(
-                "WARNING: This chatapp has been noted by authorities as being in use by major War Criminals, proceed with extreme caution and report any suspicious actvity to // TODO: Contact Info"
+                "WARNING: This Bellower has been noted by authorities as being in use by major War Criminals, proceed with extreme caution and report any suspicious actvity to // TODO: Contact Info"
             );
         }
     }, [user]);
@@ -49,7 +49,7 @@ function App() {
                 setlongConnect(true);
             }, 5000);
         } else {
-            document.title = "Bunyips Chatapp";
+            document.title = "Bunyip Bellower";
         }
     }, [online]);
 
@@ -58,7 +58,7 @@ function App() {
     ) : (
         <>
             <div className="offline">
-                <h1>Bunyips Chatapp</h1>
+                <h1>Bunyip Bellower</h1>
                 <p className="conn">Connecting</p>
             </div>
             {longConnect && (

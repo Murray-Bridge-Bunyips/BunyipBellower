@@ -22,7 +22,7 @@ function Users({ online, offline, unknown }: { online: Array<UserData>; offline:
                     return <img onClick={topen} src={user.pfp} key={user.uid} alt={user.name} title={user.name} />;
                 })}
                 <div className="backupname">
-                    <b>Bunyips Chatapp</b>
+                    <b>Bunyip Bellower</b>
                     <br />
                     {online.length} user(s) online
                 </div>
@@ -35,7 +35,7 @@ function Users({ online, offline, unknown }: { online: Array<UserData>; offline:
                     <span className="close" onClick={tclose}>
                         &times;
                     </span>
-                    <h2 className="text-center">Bunyips Chatapp</h2>
+                    <h2 className="text-center">Bunyip Bellower</h2>
                     <h5 className="text-center">User Status List</h5>
                     <hr />
                     <ul>
