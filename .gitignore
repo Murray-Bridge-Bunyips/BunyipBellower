@@ -24,3 +24,5 @@ yarn-error.log*
 .replit
 replit.nix
 replitrun.sh
+
+*.cache

@@ -31,8 +31,7 @@ function Login() {
                 <div className="login-inner">
                     <h4>Welcome to the</h4>
                     <h2>Bunyip Bellower</h2>
-                    {/* Use Semantic Versioning (semver) here to indicate the current application version */}
-                    <i>Version v1.1.0</i>
+                    <b className="small">DEVELOPER-ONLY RESTRICTED</b>
                     <br /> <br />
                     <button onClick={signInWithGoogle} className="googlebtn">
                         Sign in with Google
