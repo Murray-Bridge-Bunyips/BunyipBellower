@@ -1,0 +1,95 @@
+/*
+ *    Module styles for file upload menu.
+ *    Author: Lucas Bubner, 2023
+ */
+
+.barload {
+    border-radius: 5px;
+}
+
+.outerload {
+    border-radius: 5px;
+    background-color: black;
+}
+
+.innerload {
+    border-radius: 5px;
+    transition: width 0.5s;
+    background-color: red;
+    color: white;
+}
+
+.innerload p {
+    overflow: visible;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.fileinfo {
+    padding: 8px;
+}
+
+.uploadButton,
+.fileInput {
+    color: white;
+    background-color: #112b11;
+    transition: background-color 0.3s;
+    border: 0;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.fileInput {
+    width: 100%;
+}
+
+.uploadButton:hover,
+.fileInput:hover {
+    cursor: pointer;
+    background-color: #145014;
+}
+
+.uploadWindow {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.innerUploadWindow {
+    width: 50% !important;
+}
+
+.close,
+.popupbutton {
+    color: white;
+    cursor: pointer;
+    font-size: 45px;
+    font-weight: 600;
+    float: right;
+    padding: 12px;
+}
+
+.close:hover {
+    color: white !important;
+}
+
+.popupbutton {
+    transition: background-color 0.3s;
+    border-radius: 10px 0 0 10px;
+    min-width: 50px;
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBVcGxvYWRlZCB0bzogU1ZHIFJlcG8sIHd3dy5zdmdyZXBvLmNvbSwgR2VuZXJhdG9yOiBTVkcgUmVwbyBNaXhlciBUb29scyAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIGZpbGw9IiNmZmZmZmYiIGhlaWdodD0iODAwcHgiIHdpZHRoPSI4MDBweCIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiANCgkgdmlld0JveD0iMCAwIDQ5MC45NTUgNDkwLjk1NSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBpZD0iWE1MSURfNDQ4XyIgZD0iTTQ0NS43NjcsMzA4LjQybC01My4zNzQtNzYuNDl2LTIwLjY1NnYtMTEuMzY2Vjk3LjI0MWMwLTYuNjY5LTIuNjA0LTEyLjk0LTcuMzE4LTE3LjY0NUwzMTIuNzg3LDcuMzAxDQoJQzMwOC4wNzMsMi41ODgsMzAxLjc5NiwwLDI5NS4xNDksMEg3Ny41OTdDNTQuMTYxLDAsMzUuMTAzLDE5LjA2NiwzNS4xMDMsNDIuNDk0VjQyNS42OGMwLDIzLjQyNywxOS4wNTksNDIuNDk0LDQyLjQ5NCw0Mi40OTQNCgloMTU5LjMwN2gzOS43MTRjMS45MDIsMi41NCwzLjkxNSw1LDYuMjMyLDcuMjA1YzEwLjAzMyw5LjU5MywyMy41NDcsMTUuNTc2LDM4LjUwMSwxNS41NzZjMjYuOTM1LDAtMS4yNDcsMCwzNC4zNjMsMA0KCWMxNC45MzYsMCwyOC40ODMtNS45ODIsMzguNTE3LTE1LjU3NmMxMS42OTMtMTEuMTU5LDE3LjM0OC0yNS44MjUsMTcuMzQ4LTQwLjI5di00MC4wNmMxNi4yMTYtMy40MTgsMzAuMTE0LTEzLjg2NiwzNy45MS0yOC44MTENCglDNDU5LjE1MSwzNDcuNzA0LDQ1Ny43MzEsMzI1LjU1NCw0NDUuNzY3LDMwOC40MnogTTE3MC4wOTUsNDE0Ljg3Mkg4Ny40MjJWNTMuMzAyaDE3NS42ODF2NDYuNzUyDQoJYzAsMTYuNjU1LDEzLjU0NywzMC4yMDksMzAuMjA5LDMwLjIwOWg0Ni43NnY2Ni4zNzdoLTAuMjU1djAuMDM5Yy0xNy42ODUtMC40MTUtMzUuNTI5LDcuMjg1LTQ2LjkzNCwyMy40NmwtNjEuNTg2LDg4LjI4DQoJYy0xMS45NjUsMTcuMTM0LTEzLjM4NywzOS4yODQtMy43MjIsNTcuNzk5YzcuNzk1LDE0Ljk0NSwyMS42OTIsMjUuMzkzLDM3LjkxLDI4LjgxMXYxOS44NDJoLTEwLjI5SDE3MC4wOTV6IE00MTAuMzE2LDM0NS43NzENCgljLTIuMDMsMy44NjYtNS45OSw2LjI3MS0xMC4zMzcsNi4yNzFoLTAuMDE2aC0zMi41NzV2ODMuMDQ4YzAsNi40MzctNS4yMzksMTEuNjYyLTExLjY1OSwxMS42NjJoLTAuMDE3SDMyMS4zNWgtMC4wMTcNCgljLTYuNDIzLDAtMTEuNjYyLTUuMjI1LTExLjY2Mi0xMS42NjJ2LTgzLjA0OGgtMzIuNTc0aC0wLjAxNmMtNC4zNDYsMC04LjMwOC0yLjQwNS0xMC4zMzYtNi4yNzENCgljLTIuMDEyLTMuODY2LTEuNzI1LTguNDksMC43ODMtMTIuMDdsNjEuNDI0LTg4LjA2NGMyLjE4OS0zLjEyMyw1Ljc2OS00Ljk4NCw5LjU3LTQuOTg0aDAuMDE3YzMuODAyLDAsNy4zOCwxLjg2MSw5LjU2OCw0Ljk4NA0KCWw2MS40MjcsODguMDY0QzQxMi4wNCwzMzcuMjgsNDEyLjMyOCwzNDEuOTA1LDQxMC4zMTYsMzQ1Ljc3MXoiLz4NCjwvc3ZnPg==");
+    background-color: rgb(0, 90, 31);
+    background-size: 66%;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-weight: 600;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.popupbutton:hover {
+    background-color: rgb(0, 122, 43);
+}
+
+.ftitle,
+.ftext {
+    padding: 12px;
+}

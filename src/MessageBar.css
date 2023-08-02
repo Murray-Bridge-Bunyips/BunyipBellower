@@ -1,0 +1,64 @@
+/*
+ *    Styles for editing the appearance of the message bar at the bottom of the viewport
+ *    Author: Lucas Bubner, 2023
+ */
+
+.messagebar {
+    padding: 12px;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.msginput {
+    position: relative;
+    color: white;
+    background-color: rgb(0, 90, 31);
+    border: 1px solid #ccc;
+    height: auto;
+    flex: 1;
+    width: calc(100vw - 28px);
+    border: 0;
+    outline: none;
+}
+
+.nomsg {
+    border-radius: 10px;
+    width: calc(100vw - 28px);
+    padding: 8px;
+}
+
+.nomsg p {
+    text-align: center;
+    transform: translateY(8px);
+    font-size: 16px;
+}
+
+.sendbutton {
+    min-width: 50px;
+    min-height: 50px;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDguMDAwMDAwcHQiIGhlaWdodD0iNDguMDAwMDAwcHQiIHZpZXdCb3g9IjAgMCA0OC4wMDAwMDAgNDguMDAwMDAwIgogcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0OC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCmZpbGw9IiNmZmZmZmYiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik0yMjYgMzcyIGMtOTkgLTM3IC0xODEgLTcyIC0xODMgLTc5IC02IC0xNiA3NSAtMTAzIDk2IC0xMDMgOSAwIDQzCjIzIDc2IDUxIDk2IDgwIDE0MSAxMTUgMTI0IDk0IC05IC0xMSAtNDYgLTU3IC04MiAtMTAxIC0zNyAtNDUgLTY3IC04OCAtNjcKLTk3IDAgLTE5IDg3IC05OSAxMDMgLTk0IDE1IDUgMTQ5IDM2NyAxNDMgMzg0IC0zIDcgLTExIDEzIC0xOCAxMiAtNyAwIC05NAotMzEgLTE5MiAtNjd6Ii8+CjwvZz4KPC9zdmc+Cg==");
+    background-size: 66%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-color 0.3s;
+    border-radius: 0 10px 10px 0;
+    background-color: rgb(0, 90, 31);
+    color: black;
+    border: none;
+    font: inherit;
+    outline: inherit;
+    font-weight: 600;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.sendbutton:hover:not(:disabled) {
+    background-color: rgb(0, 122, 43);
+}
+
+.sendbutton:disabled {
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDguMDAwMDAwcHQiIGhlaWdodD0iNDguMDAwMDAwcHQiIHZpZXdCb3g9IjAgMCA0OC4wMDAwMDAgNDguMDAwMDAwIgogcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0OC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCmZpbGw9IiM3ZjdmN2YiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik0yMjYgMzcyIGMtOTkgLTM3IC0xODEgLTcyIC0xODMgLTc5IC02IC0xNiA3NSAtMTAzIDk2IC0xMDMgOSAwIDQzCjIzIDc2IDUxIDk2IDgwIDE0MSAxMTUgMTI0IDk0IC05IC0xMSAtNDYgLTU3IC04MiAtMTAxIC0zNyAtNDUgLTY3IC04OCAtNjcKLTk3IDAgLTE5IDg3IC05OSAxMDMgLTk0IDE1IDUgMTQ5IDM2NyAxNDMgMzg0IC0zIDcgLTExIDEzIC0xOCAxMiAtNyAwIC05NAotMzEgLTE5MiAtNjd6Ii8+CjwvZz4KPC9zdmc+Cg==");
+    cursor: not-allowed;
+}

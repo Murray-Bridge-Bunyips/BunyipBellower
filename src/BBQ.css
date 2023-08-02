@@ -1,0 +1,45 @@
+/*
+ *    hamburber css :)
+ *    Author: Lachlan Paul, 2023
+ */
+
+.inwin {
+    height: 66% !important;
+}
+
+.bbqbtn {
+    position: absolute;
+    right: 15px;
+    color: rgb(190, 185, 185);
+    background-color: rgba(139, 139, 146, 0.4);
+    border: 0;
+    outline: none;
+    width: 50px;
+    height: 50px;
+
+    /* SVG for bbq bacon burger menu */
+    border-radius: 15px;
+    transition: background-color 0.3s;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHJlY3Qgd2lkdGg9IjM1MiIgaGVpZ2h0PSIzMiIgeD0iODAiIHk9Ijk2IiBmaWxsPSJ2YXIoLS1jaS1wcmltYXJ5LWNvbG9yLCAjZmZmZmZmKSIgY2xhc3M9ImNpLXByaW1hcnkiLz4KICA8cmVjdCB3aWR0aD0iMzUyIiBoZWlnaHQ9IjMyIiB4PSI4MCIgeT0iMjQwIiBmaWxsPSJ2YXIoLS1jaS1wcmltYXJ5LWNvbG9yLCAjZmZmZmZmKSIgY2xhc3M9ImNpLXByaW1hcnkiLz4KICA8cmVjdCB3aWR0aD0iMzUyIiBoZWlnaHQ9IjMyIiB4PSI4MCIgeT0iMzg0IiBmaWxsPSJ2YXIoLS1jaS1wcmltYXJ5LWNvbG9yLCAjZmZmZmZmKSIgY2xhc3M9ImNpLXByaW1hcnkiLz4KPC9zdmc+");
+    background-size: 66%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Styles for all menu items in the hamburger menu */
+.buttonarea button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    width: 100%;
+    height: fit-content;
+}
+
+.bbqbtn:hover {
+    background-color: rgba(122, 122, 128, 0.8);
+    cursor: pointer;
+}

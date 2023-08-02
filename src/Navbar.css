@@ -1,0 +1,104 @@
+/*
+ *    Styles for editing the appearance of the navbar pinned to the top of the viewport
+ *    Author: Lachlan Paul, 2023
+ */
+
+.navbar {
+    /* https://grid.layoutit.com/ */
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    gap: 0px 0px;
+    grid-template-areas:
+        "img"
+        "name";
+
+    position: fixed;
+    margin: 8px;
+    width: calc(100vw - 20px);
+    background: url("/navbarbg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(0, 52, 14);
+    background-position: 100%;
+    height: 100px;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.navbar-brand {
+    grid-area: img;
+    justify-self: left;
+    align-self: center;
+    border-radius: 50%;
+    margin: 0;
+    width: 55px;
+    height: auto;
+}
+
+.navbar-name {
+    justify-self: center;
+    align-self: center;
+    grid-area: name;
+    font-size: 12px;
+}
+
+.sobtn {
+    position: absolute;
+    right: 80px;
+    color: rgb(190, 185, 185);
+    background-color: rgba(139, 139, 146, 0.4);
+    border: 0;
+    outline: none;
+    width: 50px;
+    height: 50px;
+
+    /* SVG for sign out button */
+    border-radius: 15px;
+    transition: background-color 0.3s;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBVcGxvYWRlZCB0bzogU1ZHIFJlcG8sIHd3dy5zdmdyZXBvLmNvbSwgR2VuZXJhdG9yOiBTVkcgUmVwbyBNaXhlciBUb29scyAtLT4NCjxzdmcgZmlsbD0iI2ZmZmZmZiIgaGVpZ2h0PSI4MDBweCIgd2lkdGg9IjgwMHB4IiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIA0KCSB2aWV3Qm94PSIwIDAgMzg0Ljk3MSAzODQuOTcxIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxnIGlkPSJTaWduX091dCI+DQoJCTxwYXRoIGQ9Ik0xODAuNDU1LDM2MC45MUgyNC4wNjFWMjQuMDYxaDE1Ni4zOTRjNi42NDEsMCwxMi4wMy01LjM5LDEyLjAzLTEyLjAzcy01LjM5LTEyLjAzLTEyLjAzLTEyLjAzSDEyLjAzDQoJCQlDNS4zOSwwLjAwMSwwLDUuMzksMCwxMi4wMzFWMzcyLjk0YzAsNi42NDEsNS4zOSwxMi4wMywxMi4wMywxMi4wM2gxNjguNDI0YzYuNjQxLDAsMTIuMDMtNS4zOSwxMi4wMy0xMi4wMw0KCQkJQzE5Mi40ODUsMzY2LjI5OSwxODcuMDk1LDM2MC45MSwxODAuNDU1LDM2MC45MXoiLz4NCgkJPHBhdGggZD0iTTM4MS40ODEsMTg0LjA4OGwtODMuMDA5LTg0LjJjLTQuNzA0LTQuNzUyLTEyLjMxOS00Ljc0LTE3LjAxMSwwYy00LjcwNCw0Ljc0LTQuNzA0LDEyLjQzOSwwLDE3LjE3OWw2Mi41NTgsNjMuNDZIOTYuMjc5DQoJCQljLTYuNjQxLDAtMTIuMDMsNS40MzgtMTIuMDMsMTIuMTUxYzAsNi43MTMsNS4zOSwxMi4xNTEsMTIuMDMsMTIuMTUxaDI0Ny43NGwtNjIuNTU4LDYzLjQ2Yy00LjcwNCw0Ljc1Mi00LjcwNCwxMi40MzksMCwxNy4xNzkNCgkJCWM0LjcwNCw0Ljc1MiwxMi4zMTksNC43NTIsMTcuMDExLDBsODIuOTk3LTg0LjJDMzg2LjExMywxOTYuNTg4LDM4Ni4xNjEsMTg4Ljc1NiwzODEuNDgxLDE4NC4wODh6Ii8+DQoJPC9nPg0KCTxnPg0KCTwvZz4NCgk8Zz4NCgk8L2c+DQoJPGc+DQoJPC9nPg0KCTxnPg0KCTwvZz4NCgk8Zz4NCgk8L2c+DQoJPGc+DQoJPC9nPg0KPC9nPg0KPC9zdmc+");
+    background-size: 66%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sobtn:hover {
+    background-color: rgba(122, 122, 128, 0.8);
+    cursor: pointer;
+}
+
+.currenttime,
+.productname,
+.backupname {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: fit-content;
+    position: fixed;
+    z-index: 2;
+}
+
+.currenttime {
+    top: 50px;
+}
+
+.backupname {
+    display: none;
+    transform: translateX(-65%);
+    top: 33px;
+}
+
+@media screen and (max-width: 950px) {
+    .currenttime,
+    .productname {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .backupname {
+        display: block;
+    }
+}

@@ -1,0 +1,134 @@
+/*
+ *    Styles for display of permission nodes
+ *    Author: Lucas Bubner, 2023
+ */
+
+/* Ah... CSS Element "Button"... You may not go any further... My... employers have grown quite fond of their... formatless buttons... */
+.authorised button {
+    transition: background-color 0.3s;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.authorised ul {
+    list-style: none;
+    overflow-y: scroll;
+    overflow-x: auto;
+    max-height: 300px;
+}
+
+.authorised ul li::before {
+    content: "⮞ ";
+}
+
+.authorised ul li::after {
+    content: " ⮜";
+}
+
+.authorised {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: max-content max-content max-content max-content;
+    gap: 0px 0px;
+    grid-template-areas:
+        "title close"
+        "users users"
+        "bu bu"
+        "sysmsg sysmsg"
+        "tt tt";
+}
+
+.close {
+    grid-area: close;
+}
+
+.title {
+    grid-area: title;
+    padding: 12px;
+}
+
+.users {
+    grid-area: users;
+    padding: 12px;
+    width: 100%;
+}
+
+.users ul {
+    margin: 0;
+    padding: 0;
+}
+
+.users li {
+    text-align: center;
+}
+
+.users li button {
+    padding: 8px;
+    border-radius: 8px;
+    margin: 4px;
+    background-color: rgb(58, 58, 58);
+}
+
+.users li button:hover {
+    background-color: rgb(43, 43, 43);
+}
+
+.new,
+.sysmsg {
+    transition: background-color 0.4s;
+    background-color: rgb(15, 71, 27) !important;
+    padding: 12px !important;
+    border-radius: 12px;
+    width: 66%;
+    transform: translateX(25%);
+    grid-area: bu;
+}
+
+.new:hover {
+    background-color: rgb(28, 126, 49) !important;
+}
+
+.cleardb {
+    transition: background-color 0.4s;
+    background-color: rgb(73, 0, 0);
+    border-radius: 12px;
+    margin-top: 12px;
+    padding: 12px;
+    text-align: center;
+    width: 100%;
+}
+
+.cleardb {
+    grid-area: tt;
+}
+
+.sysmsg {
+    margin-top: 12px;
+    background-color: rgb(58, 58, 58) !important;
+    grid-area: sysmsg;
+}
+
+.sysmsg:hover {
+    cursor: pointer;
+    background-color: rgb(102, 102, 102) !important;
+}
+
+.cleardb:hover {
+    cursor: pointer;
+    background-color: rgb(163, 0, 0);
+}
+
+@media only screen and (max-width: 600px) {
+    .authorised ul li::before {
+        content: "";
+    }
+
+    .authorised ul li::after {
+        content: "";
+    }
+}

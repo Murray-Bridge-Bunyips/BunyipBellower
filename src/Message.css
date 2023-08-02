@@ -1,0 +1,102 @@
+/*
+ *    Styles for editing the appearance of the info that appears for each message, as well as the message content.
+ *    Authors: Lachlan Paul, Lucas Bubner, 2023
+ */
+
+.pfp {
+    grid-area: pfp;
+    border-radius: 50%;
+    max-width: 66px;
+}
+
+.message {
+    animation: gen 0.5s;
+    border-radius: 15px;
+    transition: background-color 0.3s;
+    padding: 8px;
+    display: grid;
+    margin: 0;
+    grid-template-columns: auto 1.2fr;
+    grid-template-rows: auto auto;
+    gap: 0px 0px;
+    grid-template-areas:
+        "pfp namedate msgman"
+        "pfp text text";
+}
+
+/* I've used this same keyframe in at least three projects */
+@keyframes gen {
+    0% {
+        transform: translate(0px, 40px);
+    }
+
+    100% {
+        transform: translate(0px, 0px);
+    }
+}
+
+.message:has(+ div) {
+    padding: 12px;
+}
+
+.message:hover {
+    background-color: #282c2d;
+}
+
+.namedate {
+    max-width: fit-content;
+    place-items: center;
+    grid-area: namedate;
+}
+
+.date,
+.name {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.date {
+    font-size: 12px;
+    max-width: fit-content;
+    padding: 12px;
+    margin: 0;
+}
+
+.text,
+.file {
+    transform: translateX(12px);
+    grid-area: text;
+}
+
+.text {
+    width: 98%;
+    min-width: 80%;
+    height: 100%;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+.name {
+    padding-top: 6px;
+    padding-left: 12px;
+    max-width: fit-content;
+    margin: 0;
+}
+
+.login {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.fileimage:hover {
+    cursor: pointer;
+}
+
+.fileimage,
+.filevideo {
+    max-height: 350px;
+    max-width: 90%;
+}

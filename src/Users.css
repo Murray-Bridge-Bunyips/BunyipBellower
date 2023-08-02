@@ -1,0 +1,184 @@
+/*
+ *    Styles for popup and navbar elements for the Users module
+ *    Author: Lucas Bubner, 2023
+ */
+
+.userPfps {
+    position: absolute;
+    left: 100px;
+    border: 0;
+    outline: none;
+    width: fit-content;
+    height: 75px;
+    border-radius: 15px;
+}
+
+.extrausers {
+    position: absolute;
+    text-align: center;
+    top: 33px;
+    left: 340px;
+    border: 0;
+    outline: none;
+}
+
+.userPfps img {
+    display: none;
+}
+
+.userPfps img:hover {
+    cursor: pointer;
+}
+
+.userPfps img:nth-child(1) {
+    display: inline;
+    z-index: 0;
+    transform: translate(-20px, 8%);
+}
+
+.userPfps img:nth-child(2) {
+    display: inline;
+    z-index: 1;
+    transform: translate(-50px, 8%);
+}
+
+.userPfps img:nth-child(3) {
+    display: inline;
+    z-index: 2;
+    transform: translate(-75px, 8%);
+}
+
+.userPfps img:nth-child(4) {
+    display: inline;
+    z-index: 3;
+    transform: translate(-100px, 8%);
+}
+
+.userPfps img:nth-child(5) {
+    display: inline;
+    z-index: 4;
+    transform: translate(-125px, 8%);
+}
+
+.userPfps img:nth-child(6) {
+    display: inline;
+    z-index: 5;
+    transform: translate(-150px, 8%);
+}
+
+.userPfps img:nth-child(7) {
+    display: inline;
+    z-index: 6;
+    transform: translate(-175px, 8%);
+}
+
+.userPfps img:nth-child(8) {
+    display: inline;
+    z-index: 7;
+    transform: translate(-200px, 8%);
+}
+
+@media only screen and (max-width: 560px) {
+    .userPfps img,
+    .extrausers,
+    .onlyuser {
+        display: none !important;
+    }
+}
+
+.userPfps img {
+    overflow: hidden;
+    transition: border 0.5s;
+    border: 2px solid rgb(1, 255, 1);
+    width: 50px;
+    margin-right: 5px;
+    transform: translate(10px, 25%);
+    border-radius: 50%;
+}
+
+.userPfps img:hover {
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.userinner table td,
+.userinner table th {
+    padding: 12px;
+}
+
+.onlyuser {
+    position: absolute;
+    left: 85px;
+    top: 12.5px;
+    color: rgb(190, 185, 185);
+    background-color: rgba(139, 139, 146, 0.4);
+    border: 0;
+    outline: none !important;
+    width: 55px;
+    height: 55px;
+
+    /* SVG for user info when there is only one person */
+    border-radius: 15px;
+    transition: background-color 0.3s;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iMjQuMDAwMDAwcHQiIGhlaWdodD0iMjQuMDAwMDAwcHQiIHZpZXdCb3g9IjAgMCAyNC4wMDAwMDAgMjQuMDAwMDAwIgogcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCwyNC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCmZpbGw9IiNmZmZmZmYiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik05MCAxOTUgYy0xNSAtMTggLTEwIC00NSAxMyAtNTkgMzQgLTIyIDczIDI3IDQ3IDU5IC0xNiAxOSAtNDQgMTkKLTYwIDB6IG00NiAtMTYgYzEwIC0xNyAtMTMgLTM2IC0yNyAtMjIgLTEyIDEyIC00IDMzIDExIDMzIDUgMCAxMiAtNSAxNiAtMTF6Ii8+CjxwYXRoIGQ9Ik01OCA4NCBjLTE2IC04IC0yOCAtMjMgLTI4IC0zNCAwIC0xOCA3IC0yMCA5MCAtMjAgODMgMCA5MCAyIDkwIDIwCjAgNDIgLTk3IDY0IC0xNTIgMzR6IG0xMjUgLTIzIGM4IC04IC05IC0xMSAtNjEgLTExIC00MCAwIC03MiAyIC03MiA1IDAgMjQKMTExIDI4IDEzMyA2eiIvPgo8L2c+Cjwvc3ZnPgo=");
+    background-size: 75%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.onlyuser:hover {
+    background-color: rgba(122, 122, 128, 0.8);
+    cursor: pointer;
+}
+
+.userinner ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 450px;
+}
+
+.userinner ul li {
+    margin-bottom: 5px;
+}
+
+.useronline,
+.useroffline {
+    min-width: 375px;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.useroffline p,
+.useronline p {
+    position: relative;
+    margin: 0;
+}
+
+.useroffline p {
+    right: -90px;
+    font-style: italic;
+}
+
+.useronline p {
+    right: -225px;
+    font-weight: bold;
+}
+
+.userunknown p {
+    right: -235px;
+}
+
+.useronline img,
+.useroffline img {
+    border-radius: 50%;
+}
+
+.useronline {
+    background-color: rgba(15, 129, 0, 0.2);
+}
+
+.useroffline {
+    background-color: rgba(82, 82, 82, 0.233);
+}

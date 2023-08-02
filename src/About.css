@@ -1,0 +1,32 @@
+/*
+ *    Styles for about section information
+ *    Author: Lucas Bubner, 2023
+ */
+
+.heading {
+    padding: 12px;
+}
+
+.ghlink {
+    color: #62abff;
+}
+
+.abtable tbody tr td img {
+    border-radius: 50%;
+}
+
+.infogrid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infogrid img {
+    padding-left: 6px;
+    padding-right: 6px;
+    height: 33px;
+}
+
+.infogrid img:hover {
+    cursor: pointer;
+}
