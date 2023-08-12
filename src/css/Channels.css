@@ -1,0 +1,12 @@
+/*
+ *    Styles for the channels side menu.
+ *    Author: Lachlan Paul, 2023
+ */
+
+.menu{
+    position: fixed;
+    background: rgb(0, 52, 14);
+    height: 100%;
+    width: 20%;
+    z-index: 1;
+}

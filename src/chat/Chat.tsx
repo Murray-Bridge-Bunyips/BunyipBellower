@@ -11,6 +11,7 @@ import {onValue, ref} from "firebase/database";
 import Message from "./Message";
 import Navbar from "../layout/Navbar";
 import MessageBar from "./MessageBar";
+import Channels from "../layout/Channels"
 import "../css/Chat.css";
 
 function Chat() {
@@ -144,7 +145,9 @@ function Chat() {
                 <>
                     {/* Navbar element with profile information */}
                     <Navbar/>
-                    <div className="messages">
+                    <div className="chat">
+                            {/* Menu element for changing channels */}
+                            <Channels/>
                         {/* Allow space for Navbar to fit */}
                         <br/> <br/> <br/> <br/> <br/>
                         {/* Load more button to support pagination */}
