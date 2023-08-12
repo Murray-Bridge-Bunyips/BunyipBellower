@@ -5,7 +5,7 @@
  *    @author Lachlan Paul, 2023
  */
 
-import {auth, db, getData, MessageData, toCommas} from "../Firebase";
+import {auth, db, getData, MessageData, toCommas, currentChannel} from "../Firebase";
 import {createRef, useEffect, useRef, useState} from "react";
 import {onValue, ref} from "firebase/database";
 import Message from "./Message";
@@ -57,7 +57,7 @@ function Chat() {
 
     // Grand collection function that continually checks the message database for new/changed messages
     useEffect(() => {
-        const unsubscribe = onValue(ref(db, "messages/main/"), (snapshot) => {
+        const unsubscribe = onValue(ref(db, `messages/${currentChannel}/`), (snapshot) => {
             setMessageData(snapshot.val());
         });
         return () => unsubscribe();
@@ -153,8 +153,7 @@ function Chat() {
                         ) : (
                             <>
                                 <p className="top">
-                                    Welcome to the Bunyip Bellower! <br/> This is the start of the application's
-                                    history.
+                                    Welcome to the Bunyip Bellower! <br/> This is the start of the <b>{currentChannel}</b> channel.
                                 </p>
                                 <hr/>
                             </>

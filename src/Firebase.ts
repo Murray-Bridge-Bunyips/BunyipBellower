@@ -48,6 +48,9 @@ const storage = getStorage(app);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
+// Store what channel the user is currently in
+export let currentChannel = "main";
+
 // Define structure of user data from Firebase
 export interface UserData {
     email: string; // Primary key
@@ -249,7 +252,7 @@ export async function uploadMsg(formVal: string): Promise<void> {
 
     // Add to Firebase with UID, content, and user info
     const msgID = push(child(ref(db), "messages")).key;
-    await set(ref(db, "messages/main/" + msgID), {
+    await set(ref(db, `messages/${currentChannel}/` + msgID), {
         isMsg: true,
         isRetracted: false,
         id: msgID,
@@ -264,7 +267,7 @@ export async function uploadMsg(formVal: string): Promise<void> {
 
 export async function uploadFileMsg(url: string, type: string): Promise<void> {
     const msgID = push(child(ref(db), "messages")).key;
-    await set(ref(db, "messages/main/" + msgID), {
+    await set(ref(db, `messages/${currentChannel}/` + msgID), {
         isMsg: false,
         isRetracted: false,
         id: msgID,
@@ -278,7 +281,7 @@ export async function uploadFileMsg(url: string, type: string): Promise<void> {
 }
 
 export async function updateMsg(id: string, content: object): Promise<void> {
-    await update(ref(db, "messages/main/" + id), content);
+    await update(ref(db, `messages/${currentChannel}/` + id), content);
 }
 
 export async function deleteMsg(id: string): Promise<void> {
@@ -290,7 +293,7 @@ export async function deleteMsg(id: string): Promise<void> {
             await deleteObject(fileRef).catch((err) => errorHandler(err));
         }
         // Now we can safely delete the message as we've deleted any other objects related to it
-        await remove(ref(db, "messages/main/" + id));
+        await remove(ref(db, `messages/${currentChannel}/` + id));
     });
 }
 
@@ -300,7 +303,7 @@ export async function uploadSysMsg(message: string): Promise<void> {
     // Message limits can be ignored, as these messages are administrator controlled.
     // Keep uid and email attached to display name to ensure validity and traceback for each system message.
     const msgID = push(child(ref(db), "messages")).key;
-    await set(ref(db, "messages/main/" + msgID), {
+    await set(ref(db, `messages/${currentChannel}/` + msgID), {
         isMsg: true,
         isRetracted: false,
         id: msgID,
