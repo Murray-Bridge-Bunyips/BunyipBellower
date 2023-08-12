@@ -50,9 +50,7 @@
 
 .login-inner {
     background-color: rgba(62, 153, 77, 0.75);
-    padding: 48px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding: 48px 10%;
     border-radius: 12px;
 }
 
@@ -82,7 +80,6 @@
 
 .bg-wrapper {
     z-index: -1;
-    position: fixed;
     position: absolute;
     top: 12.5%;
     left: 0;

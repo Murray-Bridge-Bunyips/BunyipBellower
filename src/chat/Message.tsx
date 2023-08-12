@@ -5,11 +5,11 @@
  *    @author Lachlan Paul, 2023
  */
 
-import { useState, useMemo } from "react";
-import { auth, MessageData } from "./Firebase";
+import {useMemo, useState} from "react";
+import {auth, MessageData} from "../Firebase";
 import Msgman from "./Msgman";
-import "./App.css";
-import "./Message.css";
+import "../css/App.css";
+import "../css/Message.css";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import Filter from "bad-words";
@@ -22,10 +22,10 @@ export const getFileURL = (fileURL: string) => {
     return fileURL.slice(fileURL.indexOf(":") + 1);
 };
 
-const filter = new Filter({ placeHolder: "♥" });
+const filter = new Filter({placeHolder: "♥"});
 
 function Message(props: { message: MessageData; key: string }) {
-    const { message } = props;
+    const {message} = props;
     const [isHovering, setIsHovering] = useState(false);
     const handleMouseOver = () => setIsHovering(true);
     const handleMouseOut = () => setIsHovering(false);
@@ -43,7 +43,7 @@ function Message(props: { message: MessageData; key: string }) {
 
     let timestamp;
     try {
-        // Try to recieve a timestamp from the server
+        // Try to receive a timestamp from the server
         timestamp = new Date(message.createdAt);
     } catch (e) {
         // In cases where the user is the message sender, we might not be able to get the server timestamp
@@ -52,7 +52,7 @@ function Message(props: { message: MessageData; key: string }) {
     }
 
     return (
-        // Determine whether the message was sent or recieved by checking the author and current user
+        // Determine whether the message was sent or received by checking the author and current user
         <div
             className={`message ${auth.currentUser?.uid === message.uid ? "sent" : "received"}`}
             onMouseOver={handleMouseOver}
@@ -74,7 +74,7 @@ function Message(props: { message: MessageData; key: string }) {
 
                 {/* Display the proper formatted date and time metadata with each message */}
                 {message.photoURL !== "sys" && (
-                    <p className="date">{timestamp.toLocaleString("en-AU", { hour12: true })}</p>
+                    <p className="date">{timestamp.toLocaleString("en-AU", {hour12: true})}</p>
                 )}
             </div>
 
@@ -125,7 +125,8 @@ function Message(props: { message: MessageData; key: string }) {
                             // prettier-ignore
                             <a target="_blank" rel="noreferrer" href={getFileURL(message.text)}>
                                 <b>
-                                    View {getFileFormat(message.text) || "unknown"} file uploaded by {message.displayName}
+                                    View {getFileFormat(message.text) || "unknown"} file uploaded
+                                    by {message.displayName}
                                 </b>
                             </a>
                         )}
@@ -136,7 +137,7 @@ function Message(props: { message: MessageData; key: string }) {
                     <i>&lt;message deleted&gt;</i>
                 </p>
             )}
-            {message.photoURL !== "sys" && <Msgman id={message.id} isActive={isHovering} />}
+            {message.photoURL !== "sys" && <Msgman id={message.id} isActive={isHovering}/>}
         </div>
     );
 }

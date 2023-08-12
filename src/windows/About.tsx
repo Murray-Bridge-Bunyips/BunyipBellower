@@ -3,19 +3,19 @@
  *    @author Lucas Bubner, 2023
  */
 
-import { useRef } from "react";
+import {useRef} from "react";
 import Popup from "reactjs-popup";
-import { PopupActions } from "../node_modules/reactjs-popup/dist/types";
-import "./CommonPopup.css";
-import "./About.css";
+import {PopupActions} from "reactjs-popup/dist/types";
+import "../css/CommonPopup.css";
+import "../css/About.css";
 
 function About() {
-    const tref = useRef<PopupActions>(null);
+    const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
     return (
         <Popup ref={tref} trigger={<button className="bbqitem">About Application</button>} nested>
             <>
-                <div className="outer" onClick={tclose} />
+                <div className="outer" onClick={tclose}/>
                 <div className="inner">
                     <h2 className="heading text-center">The Bunyip Bellower Project</h2>
                     <p className="font-italic text-center">
@@ -23,51 +23,51 @@ function About() {
                     </p>
                     <table className="abtable">
                         <tbody>
-                            <tr>
-                                <td>
-                                    <img
-                                        alt="Profile of Lucas Bubner"
-                                        height="50"
-                                        src="https://avatars.githubusercontent.com/u/81782264"
-                                    />
-                                </td>
-                                <td className="font-weight-bold">Lucas Bubner</td>
-                                <td>
-                                    <a
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        className="ghlink"
-                                        href="https://github.com/hololb/"
-                                    >
-                                        @hololb
-                                    </a>
-                                </td>
-                                <td>Lead programmer and application backend manager</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img
-                                        alt="Profile of Lachlan Paul"
-                                        height="50"
-                                        src="https://avatars.githubusercontent.com/u/99004034"
-                                    />
-                                </td>
-                                <td className="font-weight-bold">Lachlan Paul</td>
-                                <td>
-                                    <a
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        className="ghlink"
-                                        href="https://github.com/BanjoTheBot/"
-                                    >
-                                        @BanjoTheBot
-                                    </a>
-                                </td>
-                                <td>Application and frontend designer</td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <img
+                                    alt="Profile of Lucas Bubner"
+                                    height="50"
+                                    src="https://avatars.githubusercontent.com/u/81782264"
+                                />
+                            </td>
+                            <td className="font-weight-bold">Lucas Bubner</td>
+                            <td>
+                                <a
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    className="ghlink"
+                                    href="https://github.com/hololb/"
+                                >
+                                    @hololb
+                                </a>
+                            </td>
+                            <td>Lead programmer and application backend manager</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img
+                                    alt="Profile of Lachlan Paul"
+                                    height="50"
+                                    src="https://avatars.githubusercontent.com/u/99004034"
+                                />
+                            </td>
+                            <td className="font-weight-bold">Lachlan Paul</td>
+                            <td>
+                                <a
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    className="ghlink"
+                                    href="https://github.com/BanjoTheBot/"
+                                >
+                                    @BanjoTheBot
+                                </a>
+                            </td>
+                            <td>Application and frontend designer</td>
+                        </tr>
                         </tbody>
                     </table>
-                    <br />
+                    <br/>
                     <div className="infogrid">
                         <img
                             title="Source code"
@@ -107,7 +107,7 @@ function About() {
                             onClick={() => window.open("https://getbootstrap.com/", "_blank")}
                         />
                     </div>
-                    <br />
+                    <br/>
                     <h6 className="text-center">
                         Copyright (c) Lucas Bubner, Lachlan Paul, 2023 under the{" "}
                         <a

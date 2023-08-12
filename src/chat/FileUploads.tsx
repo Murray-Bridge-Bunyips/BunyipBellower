@@ -3,14 +3,13 @@
  *    @author Lucas Bubner, 2023
  */
 
-import { useState, useRef, useCallback, useEffect, ChangeEventHandler, ClipboardEvent } from "react";
-import { storage } from "./Firebase";
-import { uploadFileMsg } from "./Firebase";
-import { ref, uploadBytesResumable, getDownloadURL, UploadTask, UploadTaskSnapshot } from "firebase/storage";
+import {ChangeEventHandler, ClipboardEvent, useCallback, useEffect, useRef, useState} from "react";
+import {storage, uploadFileMsg} from "../Firebase";
+import {getDownloadURL, ref, uploadBytesResumable, UploadTask, UploadTaskSnapshot} from "firebase/storage";
 import Popup from "reactjs-popup";
-import { PopupActions } from "../node_modules/reactjs-popup/dist/types";
-import "./FileUploads.css";
-import "./CommonPopup.css";
+import {PopupActions} from "reactjs-popup/dist/types";
+import "../css/FileUploads.css";
+import "../css/CommonPopup.css";
 
 function FileUploads() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -59,7 +58,9 @@ function FileUploads() {
     };
 
     const resetElement = () => {
-        if (uploadTaskRef.current) uploadTaskRef.current.cancel();
+        if (uploadTaskRef.current && "cancel" in uploadTaskRef.current) {
+            uploadTaskRef.current.cancel();
+        }
         setIsFileUploading(false);
         setIsFilePicked(false);
         setIsFileUploaded(false);
@@ -109,7 +110,7 @@ function FileUploads() {
         );
     };
 
-    const clipboardHandler = useCallback((ev: ClipboardEvent<Element> | Event) => {
+    const clipboardHandler = useCallback((ev: ClipboardEvent | Event) => {
         const e = ev as ClipboardEvent;
         console.debug("Pasted clipboard content at target:", e.target);
 
@@ -147,11 +148,11 @@ function FileUploads() {
         };
     }, [clipboardHandler]);
 
-    const tref = useRef<PopupActions>(null);
+    const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
 
     return (
-        <Popup ref={tref} trigger={<span className="popupbutton" />} onClose={resetElement}>
+        <Popup ref={tref} trigger={<span className="popupbutton"/>} onClose={resetElement}>
             <div className="uploadWindow outer">
                 <div className="innerUploadWindow inner">
                     <span className="close" onClick={tclose}>
@@ -161,7 +162,7 @@ function FileUploads() {
                     {isFileUploaded ? (
                         <div className="ftext">File uploaded.</div>
                     ) : !isClipboard ? (
-                        <input type="file" name="file" onChange={changeHandler} className="fileInput" />
+                        <input type="file" name="file" onChange={changeHandler} className="fileInput"/>
                     ) : (
                         <div className="ftext">
                             <i>File supplied by message box clipboard paste.</i>
@@ -169,10 +170,10 @@ function FileUploads() {
                     )}
                     {isFilePicked && selectedFile != null && !isFileUploaded && (
                         <div className="fileinfo">
-                            <br />
+                            <br/>
                             <p>
-                                <i>File name:</i> {selectedFile.name} <br />
-                                <i>Filetype:</i> {selectedFile.type || "unknown"} <br />
+                                <i>File name:</i> {selectedFile.name} <br/>
+                                <i>Filetype:</i> {selectedFile.type || "unknown"} <br/>
                                 <i>Size in bytes:</i> {formatBytes(selectedFile.size)}
                             </p>
                             <p>
@@ -185,7 +186,7 @@ function FileUploads() {
                             </div>
                         </div>
                     )}
-                    <br />
+                    <br/>
                     {isFileUploading && !isFileUploaded && (
                         <div className="barload">
                             <div className="outerload">

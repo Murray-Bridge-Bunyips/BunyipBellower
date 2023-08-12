@@ -3,8 +3,8 @@
  *    @author Lucas Bubner, 2023
  */
 
-import { useState, useEffect } from "react";
-import "./Scroll.css";
+import {useEffect, useState} from "react";
+import "../css/Scroll.css";
 
 function Scroll() {
     const [showBtn, setShowBtn] = useState(false);
@@ -26,7 +26,7 @@ function Scroll() {
         });
     }
 
-    return <>{showBtn && <button className="scroll" onClick={scrollToBottom} />}</>;
+    return <>{showBtn && <button className="scroll" onClick={scrollToBottom}/>}</>;
 }
 
 export default Scroll;

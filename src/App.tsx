@@ -4,17 +4,17 @@
  *    @author Lucas Bubner, 2023
  */
 
-import "./App.css";
+import "./css/App.css";
 
 // Firebase imports and configuration
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, useAuthStateChanged, db } from "./Firebase";
-import { onValue, ref } from "firebase/database";
+import {useEffect, useState} from "react";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth, db, useAuthStateChanged} from "./Firebase";
+import {onValue, ref} from "firebase/database";
 
-// Import application login and chatroom modules
-import Chat from "./Chat";
-import Login from "./Login";
+// Import application login and chatroom windows
+import Chat from "./chat/Chat";
+import Login from "./chat/Login";
 
 function App() {
     const [user] = useAuthState(auth);
@@ -54,7 +54,7 @@ function App() {
     }, [online]);
 
     return online ? (
-        <div className="App">{user ? <Chat /> : <Login />}</div>
+        <div className="App">{user ? <Chat/> : <Login/>}</div>
     ) : (
         <>
             <div className="offline">
@@ -63,7 +63,7 @@ function App() {
             </div>
             {longConnect && (
                 <p className="disc">
-                    This seems to be taking a while. <br /> Please check your internet connection.
+                    This seems to be taking a while. <br/> Please check your internet connection.
                 </p>
             )}
         </>

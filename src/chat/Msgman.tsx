@@ -3,17 +3,17 @@
  *    @author Lucas Bubner, 2023
  */
 
-import "./Msgman.css";
-import "./CommonPopup.css";
-import { useState, useEffect, useRef } from "react";
-import { auth, deleteMsg, updateMsg, getData, toCommas, MessageData, UserData } from "./Firebase";
-import { getFileURL } from "./Message";
+import "../css/Msgman.css";
+import "../css/CommonPopup.css";
+import {useEffect, useRef, useState} from "react";
+import {auth, deleteMsg, getData, MessageData, toCommas, updateMsg, UserData} from "../Firebase";
+import {getFileURL} from "./Message";
 import Popup from "reactjs-popup";
-import { PopupActions } from "../node_modules/reactjs-popup/dist/types";
+import {PopupActions} from "reactjs-popup/dist/types";
 
-function Msgman({ id, isActive }: { id: string; isActive: boolean }) {
+function Msgman({id, isActive}: { id: string; isActive: boolean }) {
     const [shouldDisplay, setShouldDisplay] = useState(false);
-    const tref = useRef<PopupActions>(null);
+    const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
 
     // Get message data to use throughout the module
@@ -98,7 +98,7 @@ function Msgman({ id, isActive }: { id: string; isActive: boolean }) {
     return (
         <Popup
             ref={tref}
-            trigger={<button className="msgman" style={{ display: shouldDisplay && isActive ? "block" : "none" }} />}
+            trigger={<button className="msgman" style={{display: shouldDisplay && isActive ? "block" : "none"}}/>}
         >
             <>
                 <div
@@ -112,23 +112,23 @@ function Msgman({ id, isActive }: { id: string; isActive: boolean }) {
                     <p>
                         <i>Managing message: {id}</i>
                     </p>
-                    <hr />
+                    <hr/>
                     {isAdmin && (
                         <>
                             <button onClick={() => viewData()}>View message metadata</button>
-                            <hr />
+                            <hr/>
                             <button onClick={() => deleteMessage()}>Delete message</button>
-                            <hr />
+                            <hr/>
                         </>
                     )}
                     {(isAdmin || isAuthorised) && !isRetracted && (
                         <>
                             <button onClick={() => retractMsg()}>Retract message</button>
-                            <hr />
+                            <hr/>
                         </>
                     )}
                     <button onClick={() => copyMsg()}>Copy message content</button>
-                    <hr />
+                    <hr/>
                 </div>
             </>
         </Popup>

@@ -34,7 +34,7 @@
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: max-content max-content max-content max-content;
-    gap: 0px 0px;
+    gap: 0 0;
     grid-template-areas:
         "title close"
         "users users"

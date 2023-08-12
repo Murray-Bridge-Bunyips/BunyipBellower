@@ -4,12 +4,12 @@
  *    @author Lachlan Paul, 2023
  */
 
-import "./Navbar.css";
-import { auth, db, signOut, UserData, startMonitoring, validateUsers } from "./Firebase";
-import { ref, onValue } from "firebase/database";
-import { useState, useEffect } from "react";
-import BBQ from "./BBQ";
-import Users from "./Users";
+import "../css/Navbar.css";
+import {auth, db, signOut, startMonitoring, UserData, validateUsers} from "../Firebase";
+import {onValue, ref} from "firebase/database";
+import {useEffect, useState} from "react";
+import BBQ from "../windows/BBQ";
+import Users from "../windows/Users";
 
 function Navbar() {
     // When the module is first loaded, we need to start listening for their online presence
@@ -28,7 +28,7 @@ function Navbar() {
         const date = new Date();
         const timer = setInterval(() => {
             date.setTime(Date.now());
-            setCurrentTime(date.toLocaleTimeString("en-AU", { hour12: true }));
+            setCurrentTime(date.toLocaleTimeString("en-AU", {hour12: true}));
         }, 1000);
         return () => {
             clearInterval(timer);
@@ -81,14 +81,14 @@ function Navbar() {
                     alt={`Profile of ${auth.currentUser?.displayName}`}
                 />
                 <p className="navbar-name">{auth.currentUser?.displayName}</p>
-                <svg className="sobtn" onClick={async () => await signOut()} />
-                <BBQ />
-                <Users online={onlineUsers} offline={offlineUsers} unknown={unknownUsers} />
+                <svg className="sobtn" onClick={async () => await signOut()}/>
+                <BBQ/>
+                <Users online={onlineUsers} offline={offlineUsers} unknown={unknownUsers}/>
             </div>
             <h4 className="productname">Bunyip Bellower</h4>
             <p className="currenttime">
-                <i style={{ fontSize: "12px", color: "#e0e0e0" }}>Lucas Bubner, Lachlan Paul, 2023</i>
-                <br />
+                <i style={{fontSize: "12px", color: "#e0e0e0"}}>Lucas Bubner, Lachlan Paul, 2023</i>
+                <br/>
                 {currentTime ? currentTime : "..."}, {userData ? onlineUsers.length + " user(s) online" : "..."}
             </p>
         </>

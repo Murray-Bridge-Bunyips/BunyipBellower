@@ -4,11 +4,11 @@
  *    @author Lachlan Paul, 2023
  */
 
-import "./MessageBar.css";
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import "../css/MessageBar.css";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import FileUploads from "./FileUploads";
-import Scroll from "./Scroll";
-import { auth, uploadMsg, isMessageOverLimit, getData, toCommas, UserData } from "./Firebase";
+import Scroll from "../layout/Scroll";
+import {auth, getData, isMessageOverLimit, toCommas, uploadMsg, UserData} from "../Firebase";
 
 function MessageBar() {
     const [formVal, setFormVal] = useState("");
@@ -61,7 +61,7 @@ function MessageBar() {
                 <div className="input-group">
                     {writePerms ? (
                         <>
-                            <FileUploads />
+                            <FileUploads/>
                             <input
                                 type="text"
                                 onChange={(e) => handleMessageChange(e)}
@@ -71,7 +71,7 @@ function MessageBar() {
                             {/* Submit button for messages, also prevents sending if there is no form value */}
                             <button
                                 type="submit"
-                                disabled={formVal || isMessageOverLimit(formVal) ? false : true}
+                                disabled={!(formVal || isMessageOverLimit(formVal))}
                                 className="sendbutton"
                             />
                         </>
@@ -84,7 +84,7 @@ function MessageBar() {
                     )}
                 </div>
             </form>
-            <Scroll />
+            <Scroll/>
         </div>
     );
 }

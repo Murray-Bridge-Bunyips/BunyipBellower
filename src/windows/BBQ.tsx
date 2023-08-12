@@ -3,41 +3,41 @@
  *    @author Lachlan Paul, 2023
  */
 
-import { useRef } from "react";
+import {useRef} from "react";
 import Popup from "reactjs-popup";
-import { PopupActions } from "../node_modules/reactjs-popup/dist/types";
+import {PopupActions} from "reactjs-popup/dist/types";
 import Admin from "./Admin";
 // I could go for a
-import "./BBQ.css"; // bacon burger
-import "./CommonPopup.css";
+import "../css/BBQ.css"; // bacon burger
+import "../css/CommonPopup.css";
 import MDTable from "./MDTable";
 import About from "./About";
 
 function BBQ() {
-    const tref = useRef<PopupActions>(null);
+    const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
 
     return (
-        <Popup ref={tref} trigger={<svg className="bbqbtn" />} nested>
+        <Popup ref={tref} trigger={<svg className="bbqbtn"/>} nested>
             <>
-                <div className="outer" onClick={tclose} />
+                <div className="outer" onClick={tclose}/>
                 <div className="inner inwin">
                     <div className="buttonarea">
-                        <About />
+                        <About/>
                     </div>
-                    <hr />
+                    <hr/>
                     <div className="buttonarea">
-                        <Admin />
+                        <Admin/>
                     </div>
-                    <hr />
+                    <hr/>
                     <div className="buttonarea">
                         <button onClick={() => alert("lol no")}>Enable Light Mode</button>
                     </div>
-                    <hr />
+                    <hr/>
                     <div className="buttonarea">
-                        <MDTable />
+                        <MDTable/>
                     </div>
-                    <hr />
+                    <hr/>
                 </div>
             </>
         </Popup>

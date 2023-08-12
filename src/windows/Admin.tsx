@@ -3,13 +3,13 @@
  *    @author Lucas Bubner, 2023
  */
 
-import { useState, useEffect, useRef } from "react";
-import { auth, db, clearDatabases, toDots, toCommas, updateUser, UserData, uploadSysMsg } from "./Firebase";
-import { ref, onValue, set, remove } from "firebase/database";
+import {useEffect, useRef, useState} from "react";
+import {auth, clearDatabases, db, toCommas, toDots, updateUser, uploadSysMsg, UserData} from "../Firebase";
+import {onValue, ref, remove, set} from "firebase/database";
 import Popup from "reactjs-popup";
-import { PopupActions } from "../node_modules/reactjs-popup/dist/types";
-import "./Admin.css";
-import "./CommonPopup.css";
+import {PopupActions} from "reactjs-popup/dist/types";
+import "../css/Admin.css";
+import "../css/CommonPopup.css";
 
 function Admin() {
     const [userData, setUserData] = useState<{ [email: string]: UserData }>({});
@@ -85,8 +85,8 @@ function Admin() {
     // I would do a popup that has checkboxes and it would commit the results after, but I decided that I don't care
     // prettier-ignore
     async function editUser(email: string) {
-        if (userData[email].admin === true) {
-            if (userData[email].read !== true || userData[email].write !== true) {
+        if (userData[email].admin) {
+            if (!userData[email].read || !userData[email].write) {
                 // We know this user is an administrator, and therefore we will grant permissions without confirmation
                 await updateUser(email, {
                     read: true,
@@ -101,15 +101,15 @@ function Admin() {
 
         // email variable is comma seperated, when displaying to user ensure to pass through toDots()
         if (!window.confirm(
-                "You are viewing the permissions of: " + toDots(email) +
-                    "\n\nTheir current permissions are:" +
-                    "\nRead: " + userData[email].read.toString().toUpperCase() +
-                    "\nWrite: " + userData[email].write.toString().toUpperCase() +
-                    "\n\nIf you wish to edit these permissions or delete this user, press OK, otherwise press Cancel.")) {
+            "You are viewing the permissions of: " + toDots(email) +
+            "\n\nTheir current permissions are:" +
+            "\nRead: " + userData[email].read.toString().toUpperCase() +
+            "\nWrite: " + userData[email].write.toString().toUpperCase() +
+            "\n\nIf you wish to edit these permissions or delete this user, press OK, otherwise press Cancel.")) {
             return;
         }
 
-        let updatedata: {read?: boolean, write?: boolean} = {};
+        let updatedata: { read?: boolean, write?: boolean } = {};
         if (auth.currentUser?.email !== toDots(email)) {
             if (window.confirm(`Current READ permission of user '${toDots(email)}' is set to: ${userData[email].read.toString().toUpperCase()}\n\n${userData[email].read ? "REMOVE" : "GRANT"} read permission?\n\nIf you wish to delete this user or cancel this operation, press Cancel on both permissions.`)) {
                 updatedata.read = !userData[email].read;
@@ -138,7 +138,7 @@ function Admin() {
         }
     }
 
-    const tref = useRef<PopupActions>(null);
+    const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
 
     return (
@@ -148,7 +148,7 @@ function Admin() {
             nested
         >
             <>
-                <div className="outer" />
+                <div className="outer"/>
                 <div className="inner">
                     {isAdmin ? (
                         <div className="authorised">
@@ -167,14 +167,14 @@ function Admin() {
                                         return (
                                             // If we can't get a key from their uid, we can settle for their email instead.
                                             // This prevents React from complaining about invalid key props
-                                            <li key={user.uid !== null ? user.uid : email}>
+                                            <li key={user.uid ? user.uid : email}>
                                                 <button onClick={() => editUser(email)}>{toDots(email)}</button>
                                             </li>
                                         );
                                     })}
                                 </ul>
                             </div>
-                            <br />
+                            <br/>
                             <button onClick={() => addUser()} className="new">
                                 Add a new user
                             </button>

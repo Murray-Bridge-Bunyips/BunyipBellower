@@ -5,24 +5,24 @@
  */
 
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { useEffect } from "react";
-import { initializeApp, getApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import {useEffect} from "react";
+import {getApp, initializeApp} from "firebase/app";
+import {getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup} from "firebase/auth";
 import {
-    getDatabase,
-    ref,
-    set,
-    push,
     child,
-    onValue,
     get,
-    update,
+    getDatabase,
+    onDisconnect,
+    onValue,
+    push,
+    ref,
     remove,
     serverTimestamp,
-    onDisconnect,
+    set,
+    update,
 } from "firebase/database";
-import { getStorage, ref as sref, deleteObject, listAll } from "firebase/storage";
-import { getFileURL } from "./Message";
+import {deleteObject, getStorage, listAll, ref as sref} from "firebase/storage";
+import {getFileURL} from "./chat/Message";
 
 let app;
 
@@ -57,8 +57,8 @@ export interface UserData {
     online:
         | boolean
         | {
-              lastseen: number;
-          };
+        lastseen: number;
+    };
     uid: string | undefined;
     name: string | undefined;
     pfp: string | undefined;
@@ -91,8 +91,8 @@ function errorHandler(err: any): void {
     } else {
         alert(
             "Sorry! An error occurred attempting to perform the operation you were requesting. Error message:\n\n" +
-                err +
-                "\n\nYour window will be reloaded in 5 seconds."
+            err +
+            "\n\nYour window will be reloaded in 5 seconds."
         );
     }
 
@@ -108,7 +108,7 @@ export async function startMonitoring(email: string): Promise<void> {
     await set(onlineStatus, true);
 
     // Leave callback functions for Firebase to handle when the user disconnects
-    onDisconnect(ref(db, `users/${toCommas(email)}/online/lastseen`)).set(serverTimestamp());
+    await onDisconnect(ref(db, `users/${toCommas(email)}/online/lastseen`)).set(serverTimestamp());
 
     // Add a listener to the online status for this user changes during the lifetime of the app
     // If it changes, then this is clearly incorrect and we should change it back at once.
@@ -356,4 +356,4 @@ export async function clearDatabases(): Promise<void> {
     });
 }
 
-export { auth, db, storage };
+export {auth, db, storage};

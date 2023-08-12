@@ -5,7 +5,6 @@
 
 .moreitems {
     transition: background-color 0.5s;
-    background: none;
     color: inherit;
     border: none;
     padding: 8px;
@@ -16,7 +15,7 @@
     cursor: pointer;
     outline: none !important;
     width: calc(100vw - 20px);
-    background-color: #272a2c;
+    background: #272a2c none;
     overflow: hidden;
 }
 

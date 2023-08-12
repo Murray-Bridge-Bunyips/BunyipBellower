@@ -18,7 +18,7 @@
     margin: 0;
     grid-template-columns: auto 1.2fr;
     grid-template-rows: auto auto;
-    gap: 0px 0px;
+    gap: 0 0;
     grid-template-areas:
         "pfp namedate msgman"
         "pfp text text";
