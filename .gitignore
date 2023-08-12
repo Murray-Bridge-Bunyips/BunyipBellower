@@ -26,3 +26,7 @@ replit.nix
 replitrun.sh
 
 *.cache
+
+# editors
+.idea
+.vscode
