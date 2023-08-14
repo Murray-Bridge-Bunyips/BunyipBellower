@@ -10,3 +10,17 @@
     width: 20%;
     z-index: 1;
 }
+
+.buttons{
+    height: 50px;
+    width: 90%;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(70, 150, 10);
+    cursor: pointer; /* Makes cursor change on hover */
+    margin: 7px;
+}
+
+.buttons:hover{
+    background-color: rgb(70, 170, 10);
+}

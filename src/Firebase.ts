@@ -50,6 +50,9 @@ const db = getDatabase(app);
 
 // Store what channel the user is currently in
 export let currentChannel = "main";
+export function setCurrentChannel(channel: string): void {
+    currentChannel = channel;
+}
 
 // Define structure of user data from Firebase
 export interface UserData {
