@@ -56,13 +56,23 @@ function Chat() {
     const lastSeenTimestampRef = useRef(Date.now());
     const [newMessage, setNewMessage] = useState(false);
 
+    // Crappy hack to force a React update as it refuses to rerender when it should
+    const [channel, setChannel] = useState(currentChannel);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // Forcefully update the state with the imported variable to ensure a rerender is triggered
+            setChannel(currentChannel);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     // Grand collection function that continually checks the message database for new/changed messages
     useEffect(() => {
-        const unsubscribe = onValue(ref(db, `messages/${currentChannel}/`), (snapshot) => {
+        const unsubscribe = onValue(ref(db, `messages/${channel}/`), (snapshot) => {
             setMessageData(snapshot.val());
         });
         return () => unsubscribe();
-    }, []);
+    }, [channel]);
 
     // Set custom properties on a dummy object allow messages to appear fluidly
     const dummy = createRef<HTMLDivElement>();
@@ -156,7 +166,7 @@ function Chat() {
                         ) : (
                             <>
                                 <p className="top">
-                                    Welcome to the Bunyip Bellower! <br/> This is the start of the <b>{currentChannel}</b> channel.
+                                    Welcome to the Bunyip Bellower! <br/> This is the start of the <b>{channel}</b> channel.
                                 </p>
                                 <hr/>
                             </>
