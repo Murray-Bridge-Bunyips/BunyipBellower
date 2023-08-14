@@ -5,10 +5,10 @@
  */
 
 import "../css/MessageBar.css";
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import FileUploads from "./FileUploads";
 import Scroll from "../layout/Scroll";
-import {auth, getData, isMessageOverLimit, toCommas, uploadMsg, UserData} from "../Firebase";
+import { auth, getData, isMessageOverLimit, toCommas, uploadMsg, UserData } from "../Firebase";
 
 function MessageBar() {
     const [formVal, setFormVal] = useState("");
@@ -61,7 +61,7 @@ function MessageBar() {
                 <div className="input-group">
                     {writePerms ? (
                         <>
-                            <FileUploads/>
+                            <FileUploads />
                             <input
                                 type="text"
                                 onChange={(e) => handleMessageChange(e)}
@@ -77,14 +77,12 @@ function MessageBar() {
                         </>
                     ) : (
                         <div className="msginput nomsg">
-                            <p>
-                                You do not have permission to send any messages.
-                            </p>
+                            <p>You do not have permission to send any messages.</p>
                         </div>
                     )}
                 </div>
             </form>
-            <Scroll/>
+            <Scroll />
         </div>
     );
 }

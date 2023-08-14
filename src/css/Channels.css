@@ -3,7 +3,7 @@
  *    Author: Lachlan Paul, 2023
  */
 
-.menu{
+.menu {
     position: fixed;
     background: rgb(0, 52, 14);
     height: 100%;
@@ -11,7 +11,7 @@
     z-index: 1;
 }
 
-.buttons{
+.buttons {
     height: 50px;
     width: 90%;
     border: none;
@@ -21,6 +21,6 @@
     margin: 7px;
 }
 
-.buttons:hover{
+.buttons:hover {
     background-color: rgb(70, 170, 10);
 }

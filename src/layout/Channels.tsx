@@ -5,31 +5,46 @@
  */
 
 import "../css/Channels.css";
-import {setCurrentChannel} from "../Firebase";
+import { Fragment, useState, useEffect } from "react";
+import { onValue, ref } from "firebase/database";
+import { setCurrentChannel, db, removeChannel } from "../Firebase";
 
 function Channels() {
+    const [channels, setChannels] = useState<Array<string>>([]);
+    useEffect(() => {
+        const unsubscribe = onValue(ref(db, "messages"), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                setChannels(Object.keys(data));
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     return (
-        <>
-        <div className = "menu">
+        <div className="menu">
             <li></li>
             <li></li>
             <li></li>
             <li></li>
             <li></li>
             <center>
-                <button onClick={() => {setCurrentChannel("main");}} className="buttons">Main</button>
-                <button onClick={() => {setCurrentChannel("sec");}} className="buttons">Sec</button>
+                <form onSubmit={(e) => { e.preventDefault(); setCurrentChannel((document.getElementById("channelName") as HTMLInputElement).value); (document.getElementById("channelName") as HTMLInputElement).value = ""; }}>
+                    <input type="text" id="channelName" placeholder="Enter a channel name" />
+                </form>
+                {channels.map((channel) => (
+                    <Fragment key={channel}>
+                        <button className="buttons" onClick={() => setCurrentChannel(channel)}>
+                            {channel}
+                        </button>
+                        <button onClick={() => { if (window.confirm(`Confirm removal of ${channel}?`)) removeChannel(channel);}}>
+                            obliterate {channel}
+                        </button>
+                    </Fragment>
+                ))}
             </center>
         </div>
-        </>
     );
-  }
+}
 
-  // New channels must be added manually
-  /**
-   * main: Bunyips Robotics Club
-   * sec: Test Channel
-   */
-  const channels: Array<string> = ["main", "sec"];
 export default Channels;

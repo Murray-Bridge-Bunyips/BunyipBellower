@@ -5,8 +5,8 @@
  *    @author Lachlan Paul, 2023
  */
 
-import {useMemo, useState} from "react";
-import {auth, MessageData} from "../Firebase";
+import { useMemo, useState } from "react";
+import { auth, MessageData } from "../Firebase";
 import Msgman from "./Msgman";
 import "../css/App.css";
 import "../css/Message.css";
@@ -22,10 +22,10 @@ export const getFileURL = (fileURL: string) => {
     return fileURL.slice(fileURL.indexOf(":") + 1);
 };
 
-const filter = new Filter({placeHolder: "♥"});
+const filter = new Filter({ placeHolder: "♥" });
 
 function Message(props: { message: MessageData; key: string }) {
-    const {message} = props;
+    const { message } = props;
     const [isHovering, setIsHovering] = useState(false);
     const handleMouseOver = () => setIsHovering(true);
     const handleMouseOut = () => setIsHovering(false);
@@ -74,7 +74,7 @@ function Message(props: { message: MessageData; key: string }) {
 
                 {/* Display the proper formatted date and time metadata with each message */}
                 {message.photoURL !== "sys" && (
-                    <p className="date">{timestamp.toLocaleString("en-AU", {hour12: true})}</p>
+                    <p className="date">{timestamp.toLocaleString("en-AU", { hour12: true })}</p>
                 )}
             </div>
 
@@ -137,7 +137,7 @@ function Message(props: { message: MessageData; key: string }) {
                     <i>&lt;message deleted&gt;</i>
                 </p>
             )}
-            {message.photoURL !== "sys" && <Msgman id={message.id} isActive={isHovering}/>}
+            {message.photoURL !== "sys" && <Msgman id={message.id} isActive={isHovering} />}
         </div>
     );
 }

@@ -5,13 +5,13 @@
  *    @author Lachlan Paul, 2023
  */
 
-import {auth, db, getData, MessageData, toCommas, currentChannel} from "../Firebase";
-import {createRef, useEffect, useRef, useState} from "react";
-import {onValue, ref} from "firebase/database";
+import { auth, db, getData, MessageData, toCommas, currentChannel } from "../Firebase";
+import { createRef, useEffect, useRef, useState } from "react";
+import { onValue, ref } from "firebase/database";
 import Message from "./Message";
 import Navbar from "../layout/Navbar";
 import MessageBar from "./MessageBar";
-import Channels from "../layout/Channels"
+import Channels from "../layout/Channels";
 import "../css/Chat.css";
 
 function Chat() {
@@ -26,7 +26,7 @@ function Chat() {
 
     function updatePagination() {
         setPaginationIndex((prev) => prev + 1);
-        pdummy.current?.scrollIntoView({behavior: "auto"});
+        pdummy.current?.scrollIntoView({ behavior: "auto" });
     }
 
     useEffect(() => {
@@ -91,7 +91,7 @@ function Chat() {
             const lastMessageTimestamp = lastMessageObject.createdAt;
             // Check if the last message has not been seen yet
             if (lastMessage.current !== lastMessageTimestamp) {
-                dummy.current.scrollIntoView({behavior: "auto"});
+                dummy.current.scrollIntoView({ behavior: "auto" });
                 if (lastMessageTimestamp > lastSeenTimestampRef.current) {
                     // Enable notifications if they are not on the page
                     setNewMessage(true);
@@ -154,21 +154,22 @@ function Chat() {
             {authorised && (
                 <>
                     {/* Navbar element with profile information */}
-                    <Navbar/>
+                    <Navbar />
                     <div className="chat">
-                            {/* Menu element for changing channels */}
-                            <Channels/>
+                        {/* Menu element for changing channels */}
+                        <Channels />
                         {/* Allow space for Navbar to fit */}
-                        <br/> <br/> <br/> <br/> <br/>
+                        <br /> <br /> <br /> <br /> <br />
                         {/* Load more button to support pagination */}
                         {messages && Object.keys(messages).length > paginationIndex * PAGINATION_LIMIT ? (
-                            <button className="moreitems" onClick={() => updatePagination()}/>
+                            <button className="moreitems" onClick={() => updatePagination()} />
                         ) : (
                             <>
                                 <p className="top">
-                                    Welcome to the Bunyip Bellower! <br/> This is the start of the <b>{channel}</b> channel.
+                                    Welcome to the Bunyip Bellower! <br /> This is the start of the <b>{channel}</b>{" "}
+                                    channel.
                                 </p>
-                                <hr/>
+                                <hr />
                             </>
                         )}
                         {/* Leading dummy for pagination support */}
@@ -178,12 +179,12 @@ function Chat() {
                             Object.keys(messages).length > 0 &&
                             Object.entries(messages)
                                 .slice(paginationIndex * -PAGINATION_LIMIT)
-                                .map(([muid, msg]) => <Message message={msg} key={muid}/>)}
+                                .map(([muid, msg]) => <Message message={msg} key={muid} />)}
                         {/* Dummy element for fluid interface */}
                         <div id="dummy" ref={dummy}></div>
-                        <br/> <br/> <br/>
+                        <br /> <br /> <br />
                         {/* Message bar with end-user options to add files and message */}
-                        <MessageBar/>
+                        <MessageBar />
                     </div>
                 </>
             )}

@@ -3,11 +3,11 @@
  *    @author Lucas Bubner, 2023
  */
 
-import {useEffect, useRef, useState} from "react";
-import {auth, clearDatabases, db, toCommas, toDots, updateUser, uploadSysMsg, UserData} from "../Firebase";
-import {onValue, ref, remove, set} from "firebase/database";
+import { useEffect, useRef, useState } from "react";
+import { auth, clearDatabases, db, toCommas, toDots, updateUser, uploadSysMsg, UserData } from "../Firebase";
+import { onValue, ref, remove, set } from "firebase/database";
 import Popup from "reactjs-popup";
-import {PopupActions} from "reactjs-popup/dist/types";
+import { PopupActions } from "reactjs-popup/dist/types";
 import "../css/Admin.css";
 import "../css/CommonPopup.css";
 
@@ -148,7 +148,7 @@ function Admin() {
             nested
         >
             <>
-                <div className="outer"/>
+                <div className="outer" />
                 <div className="inner">
                     {isAdmin ? (
                         <div className="authorised">
@@ -174,7 +174,7 @@ function Admin() {
                                     })}
                                 </ul>
                             </div>
-                            <br/>
+                            <br />
                             <button onClick={() => addUser()} className="new">
                                 Add a new user
                             </button>
@@ -190,9 +190,7 @@ function Admin() {
                             <span className="close override" onClick={tclose}>
                                 &times;
                             </span>
-                            <p>
-                                Insufficient permissions to access the admin module.
-                            </p>
+                            <p>Insufficient permissions to access the admin module.</p>
                         </>
                     )}
                 </div>

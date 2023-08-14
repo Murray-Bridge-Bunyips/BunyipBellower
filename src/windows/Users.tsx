@@ -2,10 +2,10 @@
  *    User presence manager for client information, and user count dialogues.
  *    @author Lucas Bubner, 2023
  */
-import {useRef} from "react";
-import {auth, toDots, UserData} from "../Firebase";
+import { useRef } from "react";
+import { auth, toDots, UserData } from "../Firebase";
 import Popup from "reactjs-popup";
-import {PopupActions} from "reactjs-popup/dist/types";
+import { PopupActions } from "reactjs-popup/dist/types";
 import "../css/Users.css";
 import "../css/CommonPopup.css";
 

@@ -5,9 +5,9 @@
  */
 
 // https://firebase.google.com/docs/web/setup#available-libraries
-import {useEffect} from "react";
-import {getApp, initializeApp} from "firebase/app";
-import {getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup} from "firebase/auth";
+import { useEffect } from "react";
+import { getApp, initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import {
     child,
     get,
@@ -21,8 +21,8 @@ import {
     set,
     update,
 } from "firebase/database";
-import {deleteObject, getStorage, listAll, ref as sref} from "firebase/storage";
-import {getFileURL} from "./chat/Message";
+import { deleteObject, getStorage, listAll, ref as sref } from "firebase/storage";
+import { getFileURL } from "./chat/Message";
 
 let app;
 
@@ -38,7 +38,7 @@ try {
         databaseURL: "https://bunyipbellower-default-rtdb.asia-southeast1.firebasedatabase.app",
         storageBucket: "bunyipbellower.appspot.com",
         messagingSenderId: "1021407241018",
-        appId: "1:1021407241018:web:381d79b51804b683166603"
+        appId: "1:1021407241018:web:381d79b51804b683166603",
     };
     app = initializeApp(firebaseConfig);
 }
@@ -50,8 +50,13 @@ const db = getDatabase(app);
 
 // Store what channel the user is currently in
 export let currentChannel = "main";
+
 export function setCurrentChannel(channel: string): void {
     currentChannel = channel;
+}
+
+export async function removeChannel(channel: string): Promise<void> {
+    return await remove(ref(db, `messages/${channel}`));
 }
 
 // Define structure of user data from Firebase
@@ -63,8 +68,8 @@ export interface UserData {
     online:
         | boolean
         | {
-        lastseen: number;
-    };
+              lastseen: number;
+          };
     uid: string | undefined;
     name: string | undefined;
     pfp: string | undefined;
@@ -97,8 +102,8 @@ function errorHandler(err: any): void {
     } else {
         alert(
             "Sorry! An error occurred attempting to perform the operation you were requesting. Error message:\n\n" +
-            err +
-            "\n\nYour window will be reloaded in 5 seconds."
+                err +
+                "\n\nYour window will be reloaded in 5 seconds."
         );
     }
 
@@ -362,4 +367,4 @@ export async function clearDatabases(): Promise<void> {
     });
 }
 
-export {auth, db, storage};
+export { auth, db, storage };
