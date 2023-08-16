@@ -5,7 +5,7 @@
  *    @author Lachlan Paul, 2023
  */
 
-import { signInWithGoogle } from "../Firebase";
+import { signInWithGoogle, signInWithGitHub } from "../Firebase";
 import "../css/Login.css";
 
 function Login() {
@@ -35,6 +35,10 @@ function Login() {
                     <br /> <br />
                     <button onClick={signInWithGoogle} className="googlebtn">
                         Sign in with Google
+                    </button>
+                    &nbsp; &nbsp;
+                    <button onClick={signInWithGitHub} className="githubbtn">
+                        Sign in with GitHub
                     </button>
                     <br /> <br />
                     <h6>

@@ -7,7 +7,7 @@
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { useEffect } from "react";
 import { getApp, initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, GithubAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import {
     child,
     get,
@@ -156,10 +156,6 @@ export async function startMonitoring(email: string): Promise<void> {
 export async function signOut(): Promise<void> {
     if (!window.confirm("Sign out account: " + auth.currentUser?.email + "?")) return;
 
-    const onlineStatus = ref(db, `users/${toCommas(auth.currentUser?.email!)}/online`);
-    // Manually update user presence to be offline
-    await set(onlineStatus, false);
-
     // Update last seen timestamp
     await set(ref(db, `users/${toCommas(auth.currentUser?.email!)}/online/lastseen`), serverTimestamp());
     await auth.signOut();
@@ -175,7 +171,7 @@ export async function validateUsers(): Promise<void> {
     userData.forEach((child) => {
         if (child.val().online === true) {
             // Set online value of child to offline if they are currently set to online
-            set(ref(db, `users/${child.key}/online`), serverTimestamp());
+            set(ref(db, `users/${child.key}/online/lastseen`), serverTimestamp());
         }
     });
 }
@@ -184,6 +180,12 @@ export async function validateUsers(): Promise<void> {
 export function signInWithGoogle(): void {
     signInWithPopup(auth, new GoogleAuthProvider()).catch((error) => {
         console.error(`Google OAuth Failure: ${error.message}`);
+    });
+}
+
+export function signInWithGitHub(): void {
+    signInWithPopup(auth, new GithubAuthProvider()).catch((error) => {
+        console.error(`GitHub OAuth Failure: ${error.message}`);
     });
 }
 

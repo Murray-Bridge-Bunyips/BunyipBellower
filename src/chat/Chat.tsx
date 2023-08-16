@@ -33,7 +33,7 @@ function Chat() {
         if (!auth.currentUser) return;
         // Block unauthorised users from accessing the application
         getData("users", toCommas(auth.currentUser.email!)).then((userData) => {
-            if (!userData.read) {
+            if (!userData || !userData.read) {
                 try {
                     alert(
                         `Access denied to ${
