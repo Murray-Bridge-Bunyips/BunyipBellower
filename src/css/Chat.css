@@ -14,17 +14,16 @@
       "menu messages";
   }
   
-  .menu { 
+.menu { 
     grid-area: menu;
   }
   
-  .messages { 
+.messages { 
     grid-area: messages; 
     position: relative;
     right: 13%;
 }
   
-
 .moreitems {
     transition: background-color 0.5s;
     color: inherit;
