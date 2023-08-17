@@ -12,6 +12,7 @@
 .message {
     animation: gen 0.5s;
     border-radius: 15px;
+    width: 111%;
     transition: background-color 0.3s;
     display: grid;
     margin: 0;
