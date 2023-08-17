@@ -52,6 +52,10 @@ const db = getDatabase(app);
 export let currentChannel = "main";
 
 export function setCurrentChannel(channel: string): void {
+    const invalidChars = /[$#\[\]/.]/;
+    if (!channel || invalidChars.test(channel)) {
+        throw new Error("Invalid channel name!");
+    }
     currentChannel = channel;
 }
 

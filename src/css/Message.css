@@ -12,7 +12,10 @@
 .message {
     animation: gen 0.5s;
     border-radius: 15px;
+    
+    /* what on earth is this */
     width: 111%;
+
     transition: background-color 0.3s;
     display: grid;
     margin: 0;

@@ -23,25 +23,35 @@ function Channels() {
 
     return (
         <div className="menu">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
             <center>
-                <form onSubmit={(e) => { e.preventDefault(); setCurrentChannel((document.getElementById("channelName") as HTMLInputElement).value); (document.getElementById("channelName") as HTMLInputElement).value = ""; }}>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    try {
+                        setCurrentChannel((document.getElementById("channelName") as HTMLInputElement).value);
+                    } catch (e) {
+                        alert(e);
+                    }
+                    (document.getElementById("channelName") as HTMLInputElement).value = "";
+                }}>
                     <input type="text" id="channelName" placeholder="Enter a channel name" />
                 </form>
-                {channels.map((channel) => (
-                    <Fragment key={channel}>
-                        <button className="buttons" onClick={() => setCurrentChannel(channel)}>
-                            {channel}
-                        </button>
-                        <button onClick={() => { if (window.confirm(`Confirm removal of ${channel}?`)) removeChannel(channel);}} className="oblbutton">
-                            obliterate {channel}
-                        </button>
-                    </Fragment>
-                ))}
+                <button className="buttons" onClick={() => setCurrentChannel("main")}>
+                    main
+                </button>
+                <hr />
+                {channels.map((channel) => { 
+                    if (channel === "main") return;
+                    return (
+                        <Fragment key={channel}>
+                            <button className="buttons" onClick={() => setCurrentChannel(channel)}>
+                                {channel}
+                            </button>
+                            <button onClick={() => { if (window.confirm(`Confirm removal of ${channel}?`)) removeChannel(channel);}} className="oblbutton">
+                                obliterate {channel}
+                            </button>
+                        </Fragment>
+                    );
+                })}
             </center>
         </div>
     );

@@ -3,27 +3,51 @@
  *    Author: Lucas Bubner, 2023
  */
 
-.chat {  
+.chat {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 22% 70%;
     grid-template-rows: 100%;
     grid-auto-columns: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
-    grid-template-areas:
-      "menu messages";
-  }
-  
-.menu { 
-    grid-area: menu;
-  }
-  
-.messages { 
-    grid-area: messages; 
-    position: relative;
-    right: 13%;
+    grid-template-areas: "menu messages";
 }
-  
+
+.menu {
+    grid-area: menu;
+    position: fixed;
+    background: rgb(0, 52, 14);
+    height: calc(100% - 132px);
+    border-radius: 12px;
+    width: 20%;
+    top: 120px;
+    left: 15px;
+    z-index: 1;
+    overflow: auto;
+}
+
+@media screen and (max-width: 950px) {
+    .menu {
+        display: none;
+    }
+    .chat {
+        grid-template-columns: 100%;
+        grid-template-rows: 100%;
+        grid-template-areas: "messages";
+    }
+    .msginput {
+        width: calc(100vw - 28px);
+    }
+    .message {
+        width: 100%;
+    }
+}
+
+.messages {
+    grid-area: messages;
+    position: relative;
+}
+
 .moreitems {
     transition: background-color 0.5s;
     color: inherit;

@@ -157,38 +157,38 @@ function Chat() {
                     <Navbar />
                     <div className="chat">
                         <div className="menu">
-                        {/* Menu element for changing channels */}
-                        <Channels />
+                            {/* Menu element for changing channels */}
+                            <Channels />
                         </div>
                         <div className="messages">
-                        {/* Allow space for Navbar to fit */}
-                        <br /> <br /> <br /> <br /> <br />
-                        {/* Load more button to support pagination */}
-                        {messages && Object.keys(messages).length > paginationIndex * PAGINATION_LIMIT ? (
-                            <button className="moreitems" onClick={() => updatePagination()} />
-                        ) : (
-                            <>
-                                <p className="top">
-                                    Welcome to the Bunyip Bellower! <br /> This is the start of the <b>{channel}</b>{" "}
-                                    channel.
-                                </p>
-                                <hr />
-                            </>
-                        )}
-                        {/* Leading dummy for pagination support */}
-                        <div id="paginationdummy" ref={pdummy}></div>
-                        {/* Display all messages currently in Firebase */}
-                        {messages &&
-                            Object.keys(messages).length > 0 &&
-                            Object.entries(messages)
-                                .slice(paginationIndex * -PAGINATION_LIMIT)
-                                .map(([muid, msg]) => <Message message={msg} key={muid} />)}
-                        {/* Dummy element for fluid interface */}
-                        <div id="dummy" ref={dummy}></div>
-                        <br /> <br /> <br />
-                        {/* Message bar with end-user options to add files and message */}
-                        <MessageBar />
-                    </div>
+                            {/* Allow space for Navbar to fit */}
+                            <br /> <br /> <br /> <br /> <br />
+                            {/* Load more button to support pagination */}
+                            {messages && Object.keys(messages).length > paginationIndex * PAGINATION_LIMIT ? (
+                                <button className="moreitems" onClick={() => updatePagination()} />
+                            ) : (
+                                <>
+                                    <p className="top">
+                                        Welcome to the Bunyip Bellower! <br /> This is the start of the <b>{channel}</b>{" "}
+                                        channel.
+                                    </p>
+                                    <hr />
+                                </>
+                            )}
+                            {/* Leading dummy for pagination support */}
+                            <div id="paginationdummy" ref={pdummy}></div>
+                            {/* Display all messages currently in Firebase */}
+                            {messages &&
+                                Object.keys(messages).length > 0 &&
+                                Object.entries(messages)
+                                    .slice(paginationIndex * -PAGINATION_LIMIT)
+                                    .map(([muid, msg]) => <Message message={msg} key={muid} />)}
+                            {/* Dummy element for fluid interface */}
+                            <div id="dummy" ref={dummy}></div>
+                            <br /> <br /> <br />
+                            {/* Message bar with end-user options to add files and message */}
+                            <MessageBar />
+                        </div>
                     </div>
                 </>
             )}
