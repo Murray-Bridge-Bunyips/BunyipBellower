@@ -156,8 +156,11 @@ function Chat() {
                     {/* Navbar element with profile information */}
                     <Navbar />
                     <div className="chat">
+                        <div className="menu">
                         {/* Menu element for changing channels */}
                         <Channels />
+                        </div>
+                        <div className="messages">
                         {/* Allow space for Navbar to fit */}
                         <br /> <br /> <br /> <br /> <br />
                         {/* Load more button to support pagination */}
@@ -185,6 +188,7 @@ function Chat() {
                         <br /> <br /> <br />
                         {/* Message bar with end-user options to add files and message */}
                         <MessageBar />
+                    </div>
                     </div>
                 </>
             )}

@@ -13,7 +13,6 @@
     animation: gen 0.5s;
     border-radius: 15px;
     transition: background-color 0.3s;
-    padding: 8px;
     display: grid;
     margin: 0;
     grid-template-columns: auto 1.2fr;

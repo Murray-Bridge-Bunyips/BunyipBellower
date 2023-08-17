@@ -37,7 +37,7 @@ function Channels() {
                         <button className="buttons" onClick={() => setCurrentChannel(channel)}>
                             {channel}
                         </button>
-                        <button onClick={() => { if (window.confirm(`Confirm removal of ${channel}?`)) removeChannel(channel);}}>
+                        <button onClick={() => { if (window.confirm(`Confirm removal of ${channel}?`)) removeChannel(channel);}} className="oblbutton">
                             obliterate {channel}
                         </button>
                     </Fragment>
