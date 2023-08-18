@@ -90,8 +90,6 @@ function Navbar() {
             </div>
             <h4 className="productname">Bunyip Bellower</h4>
             <p className="currenttime">
-                <i style={{ fontSize: "12px", color: "#e0e0e0" }}>Lucas Bubner, Lachlan Paul, 2023</i>
-                <br />
                 {currentTime ? currentTime : "..."}, {userData ? onlineUsers.length + " user(s) online" : "..."}
             </p>
         </>

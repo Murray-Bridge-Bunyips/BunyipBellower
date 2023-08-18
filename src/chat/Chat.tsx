@@ -168,11 +168,11 @@ function Chat() {
                                 <button className="moreitems" onClick={() => updatePagination()} />
                             ) : (
                                 <>
-                                    <p className="top">
+                                    <div className="top">
                                         Welcome to the Bunyip Bellower! <br /> This is the start of the <b>{channel}</b>{" "}
                                         channel.
-                                    </p>
-                                    <hr />
+                                        <hr />
+                                    </div>
                                 </>
                             )}
                             {/* Leading dummy for pagination support */}

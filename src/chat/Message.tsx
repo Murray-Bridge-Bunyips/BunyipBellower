@@ -54,7 +54,7 @@ function Message(props: { message: MessageData; key: string }) {
     return (
         // Determine whether the message was sent or received by checking the author and current user
         <div
-            className={`message ${auth.currentUser?.uid === message.uid ? "sent" : "received"}`}
+            className={`message ${auth.currentUser?.uid === message.uid ? "sent" : "received"}${message.photoURL === "sys" ? " sys" : ""}`}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >

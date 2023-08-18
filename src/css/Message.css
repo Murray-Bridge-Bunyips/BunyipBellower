@@ -25,6 +25,17 @@
     grid-template-areas:
         "pfp namedate msgman"
         "pfp text text";
+
+    margin-top: 5px;
+}
+
+/* Target every other .message element and adjust its background-color */
+.message:nth-of-type(even) {
+    background-color: #2e3335;
+}
+
+.sys {
+    background-color: rgb(41, 41, 41) !important;
 }
 
 /* I've used this same keyframe in at least three projects */
@@ -42,7 +53,7 @@
     padding: 12px;
 }
 
-.message:hover {
+.message:hover:not(.sys) {
     background-color: #282c2d;
 }
 
@@ -50,6 +61,8 @@
     max-width: fit-content;
     place-items: center;
     grid-area: namedate;
+    display: flex;
+    align-items: center;
 }
 
 .date,
@@ -59,10 +72,13 @@
 }
 
 .date {
-    font-size: 12px;
+    font-size: 10px;
     max-width: fit-content;
+    /* bootstrap text-muted */
+    color: #878a8d;
     padding: 8px;
     margin: 0;
+    margin-top: 6px;
 }
 
 .text,
@@ -103,4 +119,5 @@
 .filevideo {
     max-height: 350px;
     max-width: 90%;
+    border-radius: 8px;
 }

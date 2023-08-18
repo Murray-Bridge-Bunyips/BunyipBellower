@@ -42,7 +42,7 @@ function About() {
                                         @hololb
                                     </a>
                                 </td>
-                                <td>Lead programmer and application backend manager</td>
+                                <td>Lead programmer and backend manager</td>
                             </tr>
                             <tr>
                                 <td>

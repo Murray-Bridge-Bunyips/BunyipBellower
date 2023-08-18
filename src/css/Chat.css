@@ -16,7 +16,8 @@
 .menu {
     grid-area: menu;
     position: fixed;
-    background: rgb(0, 52, 14);
+    background: linear-gradient(135deg, rgba(5, 33, 0, 1) 0%, rgba(0, 80, 6, 1) 100%);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
     height: calc(100% - 132px);
     border-radius: 12px;
     width: 20%;
@@ -24,6 +25,20 @@
     left: 15px;
     z-index: 1;
     overflow: auto;
+}
+
+.menu::-webkit-scrollbar {
+    width: 10px;
+}
+
+.menu::-webkit-scrollbar-track {
+    background-color: #00330f;
+}
+
+.menu::-webkit-scrollbar-thumb {
+    background-color: #025a02;
+    border-radius: 5px;
+    height: 50px;
 }
 
 @media screen and (max-width: 950px) {
@@ -49,7 +64,7 @@
 }
 
 .moreitems {
-    transition: background-color 0.5s;
+    transition: 0.3s;
     color: inherit;
     border: none;
     padding: 8px;
@@ -59,13 +74,13 @@
     font: inherit;
     cursor: pointer;
     outline: none !important;
-    width: calc(100vw - 20px);
+    width: 110%;
     background: #272a2c none;
     overflow: hidden;
 }
 
-.moreitems:active {
-    background-color: #46bb46;
+.moreitems:hover {
+    background-color: #242424;
 }
 
 .moreitems::after {
@@ -75,11 +90,20 @@
 .moreitems:active::after {
     content: "Loading...";
     font-weight: 600;
-    color: rgb(0, 0, 0);
 }
 
 .top {
     text-align: center;
     font-style: italic;
     font-size: 12px;
+    width: 111%;
+}
+
+@media screen and (max-width: 950px) {
+    .top {
+        width: 95vw;
+    }
+    .moreitems {
+        width: 95vw;
+    }
 }

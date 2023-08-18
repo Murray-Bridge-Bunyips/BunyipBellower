@@ -6,8 +6,8 @@
 .msgman {
     transition: background-color 0.4s;
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     background-color: rgba(150, 150, 150, 0.2);
     border: 0;

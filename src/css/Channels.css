@@ -4,27 +4,75 @@
  */
 
 .buttons {
+    transition: 0.3s;
     height: 50px;
     width: 90%;
     border: none;
     border-radius: 5px;
-    background-color: rgb(70, 150, 10);
+    background-color: rgb(51, 114, 3);
     cursor: pointer; /* Makes cursor change on hover */
     margin: 7px;
+    font-weight: bold;
+    text-overflow: ellipsis;
 }
 
-.buttons:hover {
+.buttons:focus {
+    outline: none;
+}
+
+.buttons:hover:not(.active) {
     background-color: rgb(70, 170, 10);
 }
 
-/* Styles for channel obliteration button */
-.oblbutton{
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(209, 33, 20);
-    cursor: pointer; /* Makes cursor change on hover */
+.active {
+    background-color: rgb(94, 255, 0);
 }
 
-.oblbutton:hover{
-    background-color: rgb(238, 35, 20);
+/* Styles for channel obliteration button */
+.oblbutton {
+    transition: 0.3s;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAATklEQVR4nGNgGBHg////Df8xQQe5hlEEGAbcAhAgSTED6erpb8F/EvmjFjCMBhHDaCoagUFECAxKC578Jx08IcUCPxIteQLSQ7QFQwoAAIX8orNLyGYcAAAAAElFTkSuQmCC);
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: center;
+    border: none;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer; /* Makes cursor change on hover */
+    background-color: #006e25;
+}
+
+.oblbutton:focus {
+    outline: none;
+}
+
+.channelpair {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+}
+
+.oblbutton:hover {
+    background-color: rgb(179, 48, 38);
+}
+
+#channelName {
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    outline: none;
+}
+
+.logo {
+    width: 100px;
 }

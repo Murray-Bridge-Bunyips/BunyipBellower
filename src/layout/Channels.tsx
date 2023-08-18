@@ -5,9 +5,9 @@
  */
 
 import "../css/Channels.css";
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { onValue, ref } from "firebase/database";
-import { setCurrentChannel, db, removeChannel } from "../Firebase";
+import { setCurrentChannel, db, removeChannel, currentChannel } from "../Firebase";
 
 function Channels() {
     const [channels, setChannels] = useState<Array<string>>([]);
@@ -22,38 +22,44 @@ function Channels() {
     }, []);
 
     return (
-        <div className="menu">
-            <center>
-                <form onSubmit={(e) => {
-                    e.preventDefault();
+        <center>
+            <img src="/logo192.png" alt="logo" className="logo" />
+            <button className={`buttons${currentChannel === "main" ? " active" : ""}`} onClick={() => setCurrentChannel("main")}>
+                Main channel
+            </button>
+            <hr />
+            <h5>Channels</h5>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                const newName = (document.getElementById("channelName") as HTMLInputElement);
+                try {
+                    if (newName.value.length > 24) {
+                        alert("Channel name too long!");
+                        return;
+                    }
                     try {
-                        setCurrentChannel((document.getElementById("channelName") as HTMLInputElement).value);
+                        setCurrentChannel(newName.value);
                     } catch (e) {
                         alert(e);
                     }
-                    (document.getElementById("channelName") as HTMLInputElement).value = "";
-                }}>
-                    <input type="text" id="channelName" placeholder="Enter a channel name" />
-                </form>
-                <button className="buttons" onClick={() => setCurrentChannel("main")}>
-                    main
-                </button>
-                <hr />
-                {channels.map((channel) => { 
-                    if (channel === "main") return;
-                    return (
-                        <Fragment key={channel}>
-                            <button className="buttons" onClick={() => setCurrentChannel(channel)}>
-                                {channel}
-                            </button>
-                            <button onClick={() => { if (window.confirm(`Confirm removal of ${channel}?`)) removeChannel(channel);}} className="oblbutton">
-                                obliterate {channel}
-                            </button>
-                        </Fragment>
-                    );
-                })}
-            </center>
-        </div>
+                } finally {
+                    newName.value = "";
+                }
+            }}>
+                <input type="text" id="channelName" placeholder="Enter a channel name" maxLength={24} />
+            </form>
+            {channels.map((channel) => { 
+                if (channel === "main") return;
+                return (
+                    <div className="channelpair" key={channel}>
+                        <button className={`buttons${currentChannel === channel ? " active" : ""}`} onClick={() => setCurrentChannel(channel)}>
+                            {channel}
+                        </button>
+                        <button onClick={() => { if (window.confirm(`Confirm removal of ${channel}?`)) removeChannel(channel);}} className="oblbutton"></button>
+                    </div>
+                );
+            })}
+        </center>
     );
 }
 

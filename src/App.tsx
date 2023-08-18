@@ -58,11 +58,18 @@ function App() {
     ) : (
         <>
             <div className="offline">
-                <h1>Bunyip Bellower</h1>
-                <p className="conn">Connecting</p>
+                <img id="loadingimg" src="/logo192.png" alt="Bunyip Bellower Logo" onError={() => {
+                    (document.getElementById("loadingimg") as HTMLElement).style.display = "none";
+                    (document.getElementById("second-loader") as HTMLElement).style.display = "block";
+                }} />
+                <div id="second-loader" style={{ display: "none" }}>
+                    <h1>Bunyip Bellower</h1>
+                    <p className="conn">Connecting</p>
+                </div>
             </div>
             {longConnect && (
                 <p className="disc">
+                    <br />
                     This seems to be taking a while. <br /> Please check your internet connection.
                 </p>
             )}
