@@ -51,7 +51,10 @@
         grid-template-areas: "messages";
     }
     .msginput {
-        width: calc(100vw - 60px);
+        width: calc(100vw - 28px);
+    }
+    .filterbutton {
+        display: none;
     }
     .message {
         width: 100%;
