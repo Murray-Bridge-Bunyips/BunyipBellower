@@ -100,10 +100,6 @@ function MDTable() {
                             </tr>
                         </tbody>
                     </table>
-                    <br />
-                    <p className="text-center">
-                        <b>Any invalid text/markdown will be converted to "Gracious Professionalism!"</b>
-                    </p>
                 </div>
             </>
         </Popup>

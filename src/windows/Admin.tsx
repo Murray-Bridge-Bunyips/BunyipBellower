@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { auth, clearDatabases, db, toCommas, toDots, updateUser, uploadSysMsg, UserData } from "../Firebase";
+import { auth, clearDatabases, db, toCommas, toDots, updateUser, uploadSysMsg, UserData, getData, changeAutomodThreshold } from "../Firebase";
 import { onValue, ref, remove, set } from "firebase/database";
 import Popup from "reactjs-popup";
 import { PopupActions } from "reactjs-popup/dist/types";
@@ -64,6 +64,18 @@ function Admin() {
                 alert("Operation completed.");
             })
             .catch((err) => alert(err));
+    }
+
+    async function changeThreshold() {
+        let currentThreshold = await getData("settings", "automod_threshold").then((res) => res);
+        if (currentThreshold === null) currentThreshold = 0.5;
+        const newThreshold = prompt(`Current AutoMod threshold is: ${currentThreshold}\n\nEnter new threshold (0.0 - 1.0):\n\nThe default value is 0.5 and is recommended for most users. 0.0 will disable AutoMod.`);
+        if (!newThreshold) return;
+        if (isNaN(Number(newThreshold)) || Number(newThreshold) < 0) {
+            alert("Invalid threshold entered.");
+            return;
+        }
+        await changeAutomodThreshold(Number(newThreshold));
     }
 
     // Send a system message from the current administrator account
@@ -180,6 +192,9 @@ function Admin() {
                             </button>
                             <button className="sysmsg" onClick={() => sysMessage()}>
                                 Send a system message
+                            </button>
+                            <button className="thresh" onClick={() => changeThreshold()}>
+                                Change AutoMod threshold
                             </button>
                             <span className="cleardb" onClick={() => clearDatabases()}>
                                 <b>CLEAR DATABASES</b>

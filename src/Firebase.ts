@@ -83,6 +83,8 @@ export interface UserData {
 export interface MessageData {
     muid: string; // Primary key
     createdAt: number;
+    autoMod: boolean;
+    autoModProb: number;
     displayName: string;
     email: string;
     id: string;
@@ -253,6 +255,14 @@ export function isMessageOverLimit(message: string): boolean {
     return message.length > 4000;
 }
 
+// Change profanity level setting
+export async function changeAutomodThreshold(level: number): Promise<void> {
+    // Clip to be 0 <= level <= 1.0
+    if (level < 0) level = 0;
+    if (level > 1) level = 1;
+    await set(ref(db, "settings/automod_threshold"), level);
+}
+
 // Function to add a message to Firebase
 export async function uploadMsg(formVal: string): Promise<void> {
     // Prevent adding blank messages into Firebase
@@ -264,9 +274,41 @@ export async function uploadMsg(formVal: string): Promise<void> {
         return;
     }
 
+    // Query the message profanity level with https://github.com/hololb/ProfanityAPI
+    let analysis = await Promise.race([
+        fetch("https://profanityapi.vercel.app/?f=" + formVal)
+            .then((res) => res.json())
+            .catch((_) => 
+                // If the API fails, we'll just assume the message is not profane
+                // There is a backup system with the personal user profanity list
+                null
+            ),
+        // Time out after 10s if we can't get a response from the API
+        new Promise((resolve, _) => setTimeout(() => resolve({}), 10000)),
+    ]);
+
+    let threshold = await getData("settings", "automod_threshold").then((res) => Number(res));
+    if (threshold === null) {
+        // Default to 0.5 if the threshold is not set in the database
+        threshold = 0.5;
+    }
+
+    let automod = false;
+    if (analysis && analysis.probability >= threshold && threshold > 0) {
+        if (
+            !window.confirm(
+                "Your message has been flagged as profane. It will be held for an admin to review. Continue sending?"
+            )
+        )
+            return;
+        automod = true;
+    }
+
     // Add to Firebase with UID, content, and user info
     const msgID = push(child(ref(db), "messages")).key;
     await set(ref(db, `messages/${currentChannel}/` + msgID), {
+        autoMod: automod,
+        autoModProb: analysis !== null ? analysis.probability : "err",
         isMsg: true,
         isRetracted: false,
         id: msgID,
@@ -317,17 +359,22 @@ export async function uploadSysMsg(message: string): Promise<void> {
     // Message limits can be ignored, as these messages are administrator controlled.
     // Keep uid and email attached to display name to ensure validity and traceback for each system message.
     const msgID = push(child(ref(db), "messages")).key;
-    await set(ref(db, `messages/${currentChannel}/` + msgID), {
-        isMsg: true,
-        isRetracted: false,
-        id: msgID,
-        uid: auth.currentUser?.uid,
-        email: auth.currentUser?.email,
-        displayName: `SYSTEM MESSAGE FROM ${auth.currentUser?.email?.toUpperCase()}`,
-        text: message,
-        photoURL: "sys",
-        createdAt: serverTimestamp(),
-    }).catch((error) => errorHandler(error));
+
+    const channels = await getData("messages", "");
+    // Send the message to every channel
+    for (const channel in channels) {
+        await set(ref(db, `messages/${channel}/` + msgID), {
+            isMsg: true,
+            isRetracted: false,
+            id: msgID,
+            uid: auth.currentUser?.uid,
+            email: auth.currentUser?.email,
+            displayName: `SYSTEM MESSAGE FROM ${auth.currentUser?.displayName?.toUpperCase()}`,
+            text: message,
+            photoURL: "sys",
+            createdAt: serverTimestamp(),
+        }).catch((error) => errorHandler(error));
+    }
 }
 
 export async function getData(endpoint: string, id: string): Promise<any> {

@@ -31,13 +31,13 @@ function Message(props: { message: MessageData; key: string }) {
     const handleMouseOut = () => setIsHovering(false);
 
     const messageText = useMemo(() => {
+        // Check localstorage for the user's profanity filter preference
+        const filterPref = localStorage.getItem("filter");
+        if (filterPref === "false") return message.text;
         try {
             return filter.clean(message.text);
         } catch (e) {
-            // If users enter text that cannot be cleaned, such as raw markdown, then we will change what is rendered.
-            // If we don't change it, the webapp will crash and burn in a fire greater than a thousand suns.
-            // This is the one instance where Filter throwing an error is actually good, as it fixes multiple issues
-            return "Gracious Professionalism!";
+            return "*<filtered>*";
         }
     }, [message.text]);
 
@@ -87,12 +87,17 @@ function Message(props: { message: MessageData; key: string }) {
                     // If it is a normal message, pass it through ReactMarkdown which will auto hyperlink any links, and add markdown
                     // Ensure to not pass through markdown if the message is a system message
                     message.photoURL !== "sys" ? (
-                        <ReactMarkdown className="text" remarkPlugins={[gfm]} linkTarget="_blank">
-                            {messageText}
-                        </ReactMarkdown>
+                        !message.autoMod ? (
+                            <ReactMarkdown className="text" remarkPlugins={[gfm]} linkTarget="_blank">
+                                {messageText}
+                            </ReactMarkdown>
+                        ) : (
+                            <p className="text"><strong>(MESSAGE AUTOMODDED)</strong> {messageText}</p>
+                        )
                     ) : (
                         <p className="text">{messageText}</p>
                     )
+                    // TODO: Admin review automod system, flagging is up and running but we need to implement a system to handle them better than just saying (MESSAGE AUTOMODDED)
                 ) : (
                     // Otherwise, it must be a file and we can display the downloadURL depending on it's type
                     // The type for the URL is prepended to the downloadURL with a colon
