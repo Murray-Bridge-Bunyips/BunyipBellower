@@ -51,7 +51,7 @@
         grid-template-areas: "messages";
     }
     .msginput {
-        width: calc(100vw - 28px);
+        width: calc(100vw - 60px);
     }
     .message {
         width: 100%;
