@@ -133,6 +133,7 @@ function Admin() {
             case "u":
                 if (window.confirm(`${user.upload ? "Revoke" : "Grant"} upload permissions for ${toDots(user.email)}?`))
                 await updateUser(user.email, {
+                    read: !user.upload === true ? true : user.read,
                     write: !user.upload === true ? true : user.write,
                     upload: !user.upload
                 });
