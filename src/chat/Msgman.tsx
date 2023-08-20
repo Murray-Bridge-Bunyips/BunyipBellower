@@ -64,7 +64,7 @@ function Msgman({ id, isActive }: { id: string; isActive: boolean }) {
     function viewData() {
         if (!message) return;
         // prettier-ignore
-        alert(`Message author: ${message.displayName}\nAuthor email: ${message.email}\nAuthor UID: ${message.uid}\nMessage ID: ${message.id}\nMessage creation time: ${message.createdAt}\nMessage type: ${message.isMsg ? "text" : "file"}\nMessage retracted? ${message.isRetracted ? "yes" : "no"}\nAutoMod profanity probability: ${message.autoModProb || "n/a"}\n\nMessage content:\n${message.text}`);
+        alert(`Message author: ${message.displayName}\nAuthor email: ${message.email}\nAuthor UID: ${message.uid}\nMessage ID: ${message.id}\nMessage creation time: ${message.createdAt}\nMessage type: ${message.isMsg ? "text" : "file"}\nMessage retracted? ${message.isRetracted ? "yes" : "no"}\nAutoMod profanity probability: ${message.autoModProb || "n/a"}\nAutoMod reviewed by UID: ${message.reviewed || "n/a"}\n\nMessage content:\n${message.text}`);
     }
 
     // Function to copy the text field of the message into the clipboard. If it is a file, copy the URL.

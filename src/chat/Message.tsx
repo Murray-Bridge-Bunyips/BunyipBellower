@@ -6,7 +6,7 @@
  */
 
 import { useMemo, useState } from "react";
-import { auth, MessageData } from "../Firebase";
+import { auth, MessageData, updateMsg } from "../Firebase";
 import Msgman from "./Msgman";
 import "../css/App.css";
 import "../css/Message.css";
@@ -24,8 +24,9 @@ export const getFileURL = (fileURL: string) => {
 
 const filter = new Filter({ placeHolder: "♥" });
 
-function Message(props: { message: MessageData; key: string }) {
+function Message(props: { isAdmin: boolean; message: MessageData; key: string }) {
     const { message } = props;
+    const isAdmin = props.isAdmin;
     const [isHovering, setIsHovering] = useState(false);
     const handleMouseOver = () => setIsHovering(true);
     const handleMouseOut = () => setIsHovering(false);
@@ -51,10 +52,28 @@ function Message(props: { message: MessageData; key: string }) {
         timestamp = new Date(Date.now());
     }
 
+    function allow() {
+        if (!isAdmin || !window.confirm("Allow message?")) return;
+        updateMsg(message.id, {
+            reviewed: auth.currentUser?.uid,
+            autoMod: false,
+        });
+    }
+
+    async function deny() {
+        if (!isAdmin || !window.confirm("Retract message?")) return;
+        await updateMsg(message.id, {
+            reviewed: auth.currentUser?.uid,
+            isRetracted: true,
+        });
+    }
+
     return (
         // Determine whether the message was sent or received by checking the author and current user
         <div
-            className={`message ${auth.currentUser?.uid === message.uid ? "sent" : "received"}${message.photoURL === "sys" ? " sys" : ""}`}
+            className={`message ${auth.currentUser?.uid === message.uid ? "sent" : "received"}${
+                message.photoURL === "sys" ? " sys" : ""
+            }`}
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
@@ -64,7 +83,8 @@ function Message(props: { message: MessageData; key: string }) {
                     className="pfp"
                     src={message.photoURL}
                     onError={() => {
-                        (document.getElementsByClassName("pfp")[0] as HTMLImageElement).src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjg4IiBoZWlnaHQ9IjI4OCIgdmlld0JveD0iMCAwIDI4OCAyODgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODgiIGhlaWdodD0iMjg4IiBmaWxsPSIjRTlFOUU5Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjIyIDEwOUMyMjIgMTM5LjM2NiAyMDQuNjQ3IDE2NS42OCAxNzkuMzE3IDE3OC41NjVDMjIzLjk4MSAxODcuNzE4IDI2Mi40NDMgMjEzLjg4NiAyODcuNjMzIDI1MEgyODhWMjg4SDBWMjUwSDAuMzY3MTg4QzI1LjU1NzQgMjEzLjg4NiA2NC4wMTkzIDE4Ny43MTggMTA4LjY4MyAxNzguNTY1QzgzLjM1MjggMTY1LjY4IDY2IDEzOS4zNjYgNjYgMTA5QzY2IDY1LjkyMTkgMTAwLjkyMiAzMSAxNDQgMzFDMTg3LjA3OCAzMSAyMjIgNjUuOTIxOSAyMjIgMTA5WiIgZmlsbD0iIzAwMDAwMCIvPgo8L3N2Zz4K";
+                        (document.getElementsByClassName("pfp")[0] as HTMLImageElement).src =
+                            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjg4IiBoZWlnaHQ9IjI4OCIgdmlld0JveD0iMCAwIDI4OCAyODgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODgiIGhlaWdodD0iMjg4IiBmaWxsPSIjRTlFOUU5Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjIyIDEwOUMyMjIgMTM5LjM2NiAyMDQuNjQ3IDE2NS42OCAxNzkuMzE3IDE3OC41NjVDMjIzLjk4MSAxODcuNzE4IDI2Mi40NDMgMjEzLjg4NiAyODcuNjMzIDI1MEgyODhWMjg4SDBWMjUwSDAuMzY3MTg4QzI1LjU1NzQgMjEzLjg4NiA2NC4wMTkzIDE4Ny43MTggMTA4LjY4MyAxNzguNTY1QzgzLjM1MjggMTY1LjY4IDY2IDEzOS4zNjYgNjYgMTA5QzY2IDY1LjkyMTkgMTAwLjkyMiAzMSAxNDQgMzFDMTg3LjA3OCAzMSAyMjIgNjUuOTIxOSAyMjIgMTA5WiIgZmlsbD0iIzAwMDAwMCIvPgo8L3N2Zz4K";
                     }}
                     alt={`Profile of ${message.displayName}`}
                     referrerPolicy="no-referrer"
@@ -77,7 +97,10 @@ function Message(props: { message: MessageData; key: string }) {
 
                 {/* Display the proper formatted date and time metadata with each message */}
                 {message.photoURL !== "sys" && (
-                    <p className="date">{timestamp.toLocaleString("en-AU", { hour12: true })}</p>
+                    <p className="date">
+                        {timestamp.toLocaleString("en-AU", { hour12: true })} {message.autoMod ? "[AutoMod]" : ""}{" "}
+                        {message.reviewed ? "[reviewed]" : ""}
+                    </p>
                 )}
             </div>
 
@@ -91,13 +114,47 @@ function Message(props: { message: MessageData; key: string }) {
                             <ReactMarkdown className="text" remarkPlugins={[gfm]} linkTarget="_blank">
                                 {messageText}
                             </ReactMarkdown>
+                        ) : isAdmin ? (
+                            <p className="text automod">
+                                <h4>AutoMod flagged.</h4>
+                                Message content requires a review and is currently only visible to administrators.{" "}
+                                <br /> <br />
+                                <strong>ACTIONS</strong>{" "}
+                                <button className="allow" onClick={allow}>
+                                    Allow
+                                </button>{" "}
+                                <button className="deny" onClick={deny}>
+                                    Retract
+                                </button>{" "}
+                                <br />
+                                <i>Profanity score: {message.autoModProb.toFixed(2)}</i> <br /> <br />
+                                <b>Message content:</b> <br />
+                                {message.text}
+                            </p>
+                        ) : message.uid === auth.currentUser?.uid ? (
+                            <>
+                                <p className="text">
+                                    <div className="waiting">
+                                        <i>
+                                            Your message content is currently not visible as it has not been reviewed.
+                                            <br />
+                                            Please wait for an admin to review it.
+                                        </i>
+                                        <br />
+                                    </div>
+                                    {message.text}
+                                </p>
+                            </>
                         ) : (
-                            <p className="text"><strong>(MESSAGE AUTOMODDED)</strong> {messageText}</p>
+                            <>
+                                <p className="text">
+                                    <i>&lt;under review&gt;</i>
+                                </p>
+                            </>
                         )
                     ) : (
                         <p className="text">{messageText}</p>
                     )
-                    // TODO: Admin review automod system, flagging is up and running but we need to implement a system to handle them better than just saying (MESSAGE AUTOMODDED)
                 ) : (
                     // Otherwise, it must be a file and we can display the downloadURL depending on it's type
                     // The type for the URL is prepended to the downloadURL with a colon

@@ -85,6 +85,7 @@ export interface MessageData {
     muid: string; // Primary key
     createdAt: number;
     autoMod: boolean;
+    reviewed: null | string;
     autoModProb: number;
     displayName: string;
     email: string;

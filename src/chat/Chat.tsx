@@ -53,6 +53,14 @@ function Chat() {
         });
     }, []);
 
+    const [adminPerms, setAdminPerms] = useState(false);
+    useEffect(() => {
+        getData("users", toCommas(auth.currentUser?.email!)).then((userData) => {
+            if (!userData) return false;
+            setAdminPerms(userData.admin);
+        });
+    }, []);
+
     const lastSeenTimestampRef = useRef(Date.now());
     const [newMessage, setNewMessage] = useState(false);
 
@@ -182,7 +190,7 @@ function Chat() {
                                 Object.keys(messages).length > 0 &&
                                 Object.entries(messages)
                                     .slice(paginationIndex * -PAGINATION_LIMIT)
-                                    .map(([muid, msg]) => <Message message={msg} key={muid} />)}
+                                    .map(([muid, msg]) => <Message isAdmin={adminPerms} message={msg} key={muid} />)}
                             {/* Dummy element for fluid interface */}
                             <div id="dummy" ref={dummy}></div>
                             <br /> <br /> <br />

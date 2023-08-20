@@ -38,6 +38,40 @@
     background-color: rgb(41, 41, 41) !important;
 }
 
+.allow,
+.deny {
+    /* remove the god awful default buttons */
+    border: none;
+    background: none;
+    color: #878a8d;
+    font-size: 12px;
+}
+
+.allow:hover,
+.deny:hover {
+    cursor: pointer;
+}
+
+.allow {
+    color: #43b581;
+}
+
+.deny {
+    color: #f04747;
+}
+
+.automod {
+    background-color: #414141;
+    border-radius: 15px;
+    padding: 12px;
+}
+
+.waiting {
+    background-color: #414141;
+    border-radius: 15px;
+    padding: 12px;
+}
+
 /* I've used this same keyframe in at least three projects */
 @keyframes gen {
     0% {
