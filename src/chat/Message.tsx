@@ -142,7 +142,7 @@ function Message(props: { isAdmin: boolean; message: MessageData; key: string })
                                         </i>
                                         <br />
                                     </div>
-                                    {message.text}
+                                    {messageText}
                                 </p>
                             </>
                         ) : (

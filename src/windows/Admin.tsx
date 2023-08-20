@@ -49,13 +49,19 @@ function Admin() {
                 read: true,
                 write: true,
                 admin: false,
+                upload: false
             };
         } else {
             data = {
                 read: false,
                 write: false,
                 admin: false,
+                upload: false
             };
+        }
+
+        if (window.confirm("Grant " + email + " permission to upload files?")) {
+            data["upload"] = true;
         }
 
         // Commit to the database
@@ -69,7 +75,7 @@ function Admin() {
     async function changeThreshold() {
         let currentThreshold = await getData("settings", "automod_threshold").then((res) => res);
         if (currentThreshold === null) currentThreshold = 0.5;
-        const newThreshold = prompt(`Current AutoMod threshold is: ${currentThreshold}\n\nEnter new threshold (0.0 - 1.0):\n\nThe default value is 0.5 and is recommended for most users. 0.0 will disable AutoMod.`);
+        const newThreshold = prompt(`Current AutoMod threshold is: ${currentThreshold}\n\nEnter new threshold (0.0 - 1.0):\n\nThe default value is 0.5, meaning if a message is 50% likely to be profane, it will be held for review. 0.0 will disable AutoMod.\n\nThis change will only apply to new messages.`);
         if (!newThreshold) return;
         if (isNaN(Number(newThreshold)) || Number(newThreshold) < 0) {
             alert("Invalid threshold entered.");
@@ -80,7 +86,7 @@ function Admin() {
 
     // Send a system message from the current administrator account
     async function sysMessage() {
-        const message = prompt("Enter message text that will displayed to all users as a system message.");
+        const message = prompt("Enter message text that will be posted to all channels as a special system message.\n\nThis message will bypass AutoMod but respect personal filters.");
         if (!message) return;
 
         const confirm = window.confirm(
@@ -93,71 +99,60 @@ function Admin() {
         });
     }
 
-    // Manage the permissions of a selected user using prompts
-    // I would do a popup that has checkboxes and it would commit the results after, but I decided that I don't care
-    // prettier-ignore
-    async function editUser(email: string) {
-        if (userData[email].admin) {
-            if (!userData[email].read || !userData[email].write) {
-                // We know this user is an administrator, and therefore we will grant permissions without confirmation
-                await updateUser(email, {
+    async function change(user: UserData, target: string) {
+        if (user.admin) {
+            if (!user.read || !user.write || !user.upload) {
+                await updateUser(user.email, {
                     read: true,
                     write: true,
+                    upload: true
                 });
-                alert("We noticed a discrepancy in this administrator's read and write permissions. This has been corrected.");
-            } else {
-                alert("You cannot edit an administator's permissions as they will always be allowed full access.");
-            }
-            return;
-        }
-
-        // email variable is comma seperated, when displaying to user ensure to pass through toDots()
-        if (!window.confirm(
-            "You are viewing the permissions of: " + toDots(email) +
-            "\n\nTheir current permissions are:" +
-            "\nRead: " + userData[email].read.toString().toUpperCase() +
-            "\nWrite: " + userData[email].write.toString().toUpperCase() +
-            "\n\nIf you wish to edit these permissions or delete this user, press OK, otherwise press Cancel.")) {
-            return;
-        }
-
-        let updatedata: { read?: boolean, write?: boolean } = {};
-        if (auth.currentUser?.email !== toDots(email)) {
-            if (window.confirm(`Current READ permission of user '${toDots(email)}' is set to: ${userData[email].read.toString().toUpperCase()}\n\n${userData[email].read ? "REMOVE" : "GRANT"} read permission?\n\nIf you wish to delete this user or cancel this operation, press Cancel on both permissions.`)) {
-                updatedata.read = !userData[email].read;
-            }
-        }
-
-        if (window.confirm(`Current WRITE permission of user '${toDots(email)}' is set to: ${userData[email].write.toString().toUpperCase()}\n\n${userData[email].write ? "REMOVE" : "GRANT"} write permission?\n\nIf you wish to delete this user or cancel this operation, press Cancel on both permissions.`)) {
-            updatedata.write = !userData[email].write;
-        }
-
-        // Update permissions now
-        if (Object.keys(updatedata).length > 0) {
-            await updateUser(email, updatedata).then(() => {
-                alert("Operation completed.");
-            });
-        } else {
-            if (!window.confirm(`You have not updated any permissions.\n\nIf you wish to delete the user '${toDots(email)}' PRESS OK NOW.\n\nOtherwise, press Cancel to exit.`)) return;
-            if (!window.confirm(`WARNING!\n\nYOU ARE ABOUT TO DELETE THIS USER: ${toDots(email)}\nTO COMPLETE THIS TRANSACTION, PRESS OK NOW.`)) {
-                alert("Operation cancelled. No data was changed.");
+                alert("We have noticed a discrepancy in this administrator's permissions. This has been corrected.");
                 return;
             }
-            // We've made sure that we want to be deleting this person, so goodbye user...
-            await remove(ref(db, `users/${toCommas(email)}`)).then(() => {
-                alert("Operation completed.");
-            })
+            alert("You cannot edit this user's permissions as they are a database-defined administrator.");
+            return;
+        }
+        switch (target) {
+            case "r":
+                if (window.confirm(`${user.read ? "Revoke" : "Grant"} read permissions for ${toDots(user.email)}?`))
+                await updateUser(user.email, {
+                    read: !user.read,
+                    write: !user.read === false ? false : user.write,
+                    upload: !user.read === false ? false : user.upload
+                });
+                break;
+            case "w":
+                if (window.confirm(`${user.write ? "Revoke" : "Grant"} write permissions for ${toDots(user.email)}?`))
+                await updateUser(user.email, {
+                    read: !user.write === true ? true : user.read,
+                    write: !user.write,
+                    upload: !user.write === false ? false : user.upload
+                });
+                break;
+            case "u":
+                if (window.confirm(`${user.upload ? "Revoke" : "Grant"} upload permissions for ${toDots(user.email)}?`))
+                await updateUser(user.email, {
+                    write: !user.upload === true ? true : user.write,
+                    upload: !user.upload
+                });
+                break;
+            case "d":
+                if (window.confirm(`delete ${toDots(user.email)} from the userlist?`))
+                await remove(ref(db, `users/${toCommas(user.email)}`)).then(() => {
+                    alert("Operation completed.");
+                });
+                break;
         }
     }
 
     const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
 
-    // TODO: Improve this menu
     return (
         <Popup
             ref={tref}
-            trigger={<button className="bbqitem">Application admin settings</button>}
+            trigger={<button className="bbqitem">Application control panel</button>}
             nested
         >
             <>
@@ -169,44 +164,56 @@ function Admin() {
                                 &times;
                             </span>
                             <div className="title">
-                                <h4>Application Administration Control Panel</h4>
+                                <h4>Control Panel</h4>
                                 <p className="portalreference">
-                                    "Prolonged exposure to this module is not part of the test."
+                                    Previously known as the 1500-Megabyte App Managing Heavy Duty Super Admin Super Panel
                                 </p>
                             </div>
                             <div className="users">
+                                <h3 className="text-center">Users</h3>
+                                <hr />
                                 <ul>
                                     {Object.entries(userData).map(([email, user]) => {
+                                        user.email = email;
                                         return (
                                             // If we can't get a key from their uid, we can settle for their email instead.
                                             // This prevents React from complaining about invalid key props
                                             <li key={user.uid ? user.uid : email}>
-                                                <button onClick={() => editUser(email)}>{toDots(email)}</button>
+                                                <span style={{ color: user.admin ? "#ff5757" : "#fff", fontWeight: user.admin ? "bold" : "normal" }}>{toDots(email)}</span>
+                                                <button onClick={() => change(user, "r")} style={{ backgroundColor: user.read ? "green" : "red" }}>R</button>
+                                                <button onClick={() => change(user, "w")} style={{ backgroundColor: user.write ? "green" : "red" }}>W</button>
+                                                <button onClick={() => change(user, "u")} style={{ backgroundColor: user.upload ? "green" : "red" }}>U</button>
+                                                <button onClick={() => change(user, "d")} className="del">D</button>
                                             </li>
                                         );
                                     })}
                                 </ul>
                             </div>
                             <br />
-                            <button onClick={() => addUser()} className="new">
-                                Add a new user
-                            </button>
-                            <button className="sysmsg" onClick={() => sysMessage()}>
-                                Send a system message
-                            </button>
-                            <button className="thresh" onClick={() => changeThreshold()}>
-                                Change AutoMod threshold
-                            </button>
-                            <span className="cleardb" onClick={() => clearDatabases()}>
-                                <b>CLEAR DATABASES</b>
-                            </span>
+                            <div className="settings">
+                                <h3 className="text-center">Settings</h3>
+                                <hr />
+                                <button onClick={() => addUser()} className="new">
+                                    Add a new user
+                                </button>
+                                <button className="thresh" onClick={() => changeThreshold()}>
+                                    Change AutoMod threshold
+                                </button>
+                                <button className="sysmsg" onClick={() => sysMessage()}>
+                                    Send a system message
+                                </button>
+                                <button className="cleardb" onClick={() => clearDatabases()}>
+                                    <b>Clear databases</b>
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <>
-                            <span className="close override" onClick={tclose}>
+                            <span className="close closer override" onClick={tclose}>
                                 &times;
                             </span>
-                            <p>Insufficient permissions to access the admin module.</p>
+                            <h5>Insufficient permissions.</h5>
+                            <p>You do not have permission to access the application control panel.</p>
                         </>
                     )}
                 </div>

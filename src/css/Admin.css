@@ -22,14 +22,6 @@
     max-height: 300px;
 }
 
-.authorised ul li::before {
-    content: "⮞ ";
-}
-
-.authorised ul li::after {
-    content: " ⮜";
-}
-
 .authorised {
     display: grid;
     grid-template-columns: auto auto;
@@ -37,15 +29,23 @@
     gap: 0 0;
     grid-template-areas:
         "title close"
-        "users users"
-        "bu bu"
-        "sysmsg sysmsg"
-        "thresh thresh"
-        "tt tt";
+        "users settings"
+}
+
+.settings {
+    grid-area: settings;
+    padding: 12px;
+    width: 100%;
 }
 
 .close {
     grid-area: close;
+    position: absolute;
+    right: 0;
+}
+
+.closer {
+    position: static;
 }
 
 .title {
@@ -65,40 +65,56 @@
 }
 
 .users li {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .users li button {
+    transition: color 0.3s;
     padding: 8px;
-    border-radius: 8px;
-    margin: 4px;
-    background-color: rgb(58, 58, 58);
+    margin: 12px 0 12px 6px;
+    color: rgb(177, 177, 177);
+    border-radius: 4px;
 }
 
 .users li button:hover {
-    background-color: rgb(43, 43, 43);
+    color: rgb(255, 255, 255) !important;
+    cursor: pointer;
+}
+
+.users li span {
+    margin-right: auto;
+}
+
+.del {
+    color: red !important;
+    background-color: #1f1f1f !important;
+}
+
+.del:hover {
+    background-color: #0f0f0f !important;
 }
 
 .new,
 .sysmsg,
-.thresh {
+.thresh,
+.cleardb {
     transition: background-color 0.4s;
     background-color: rgb(15, 71, 27) !important;
     padding: 12px !important;
     border-radius: 12px;
     width: 66%;
     transform: translateX(25%);
-    grid-area: bu;
 }
 
 .thresh {
     margin-top: 12px;
     background-color: rgb(0, 87, 109) !important;
-    grid-area: thresh;
 }
 
 .thresh:hover {
-    background-color: rgb(0, 102, 128) !important;
+    background-color: rgb(0, 122, 153) !important;
 }
 
 .new:hover {
@@ -106,23 +122,13 @@
 }
 
 .cleardb {
-    transition: background-color 0.4s;
-    background-color: rgb(73, 0, 0);
-    border-radius: 12px;
+    background-color: rgb(73, 0, 0) !important;
     margin-top: 12px;
-    padding: 12px;
-    text-align: center;
-    width: 100%;
-}
-
-.cleardb {
-    grid-area: tt;
 }
 
 .sysmsg {
     margin-top: 12px;
     background-color: rgb(58, 58, 58) !important;
-    grid-area: sysmsg;
 }
 
 .sysmsg:hover {
@@ -132,15 +138,25 @@
 
 .cleardb:hover {
     cursor: pointer;
-    background-color: rgb(163, 0, 0);
+    background-color: rgb(163, 0, 0) !important;
 }
 
-@media only screen and (max-width: 600px) {
-    .authorised ul li::before {
-        content: "";
-    }
+.portalreference {
+    font-size: 10px;
+    font-style: italic;
+}
 
-    .authorised ul li::after {
-        content: "";
+@media only screen and (max-width: 1200px) {
+    .portalreference {
+        display: none;
+    }
+    .authorised {
+        grid-template-columns: auto;
+        grid-template-rows: max-content max-content max-content max-content max-content;
+        gap: 0 0;
+        grid-template-areas:
+            "title"
+            "users"
+            "settings";
     }
 }

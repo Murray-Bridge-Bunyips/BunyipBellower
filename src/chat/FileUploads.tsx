@@ -4,7 +4,7 @@
  */
 
 import { ChangeEventHandler, ClipboardEvent, useCallback, useEffect, useRef, useState } from "react";
-import { storage, uploadFileMsg } from "../Firebase";
+import { auth, storage, uploadFileMsg, getData, toCommas } from "../Firebase";
 import { getDownloadURL, ref, uploadBytesResumable, UploadTask, UploadTaskSnapshot } from "firebase/storage";
 import Popup from "reactjs-popup";
 import { PopupActions } from "reactjs-popup/dist/types";
@@ -18,6 +18,12 @@ function FileUploads() {
     const [isFileUploading, setIsFileUploading] = useState(false);
     const [isFileUploaded, setIsFileUploaded] = useState(false);
     const [isClipboard, setIsClipboard] = useState(false);
+    const [hasPermission, setHasPermission] = useState(false);
+    useEffect(() => {
+        getData("users", toCommas(auth.currentUser?.email!)).then((data) => {
+            setHasPermission(data?.upload);
+        });
+    }, []);
 
     const uploadTaskRef = useRef<UploadTask>();
 
@@ -75,7 +81,7 @@ function FileUploads() {
     };
 
     const handleSubmission = () => {
-        if (!isFilePicked || !selectedFile) return;
+        if (!isFilePicked || !selectedFile || !hasPermission) return;
         setIsFileUploading(true);
 
         // Generate a random string of characters to supplement the file name to avoid duplicates
@@ -159,46 +165,56 @@ function FileUploads() {
                         &times;
                     </span>
                     <h3 className="ftitle">File Upload Menu</h3>
-                    {isFileUploaded ? (
-                        <div className="ftext">File uploaded.</div>
-                    ) : !isClipboard ? (
-                        <input type="file" name="file" onChange={changeHandler} className="fileInput" />
-                    ) : (
-                        <div className="ftext">
-                            <i>File supplied by message box clipboard paste.</i>
-                        </div>
-                    )}
-                    {isFilePicked && selectedFile != null && !isFileUploaded && (
-                        <div className="fileinfo">
-                            <br />
-                            <p>
-                                <i>File name:</i> {selectedFile.name} <br />
-                                <i>Filetype:</i> {selectedFile.type || "unknown"} <br />
-                                <i>Size in bytes:</i> {formatBytes(selectedFile.size)}
-                            </p>
-                            <p>
-                                <b>Upload file?</b>
-                            </p>
-                            <div>
-                                <button className="uploadButton" onClick={handleSubmission}>
-                                    Upload
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                    <br />
-                    {isFileUploading && !isFileUploaded && (
-                        <div className="barload">
-                            <div className="outerload">
-                                <div
-                                    className="innerload"
-                                    style={{
-                                        width: `${progressPercent}%`,
-                                    }}
-                                >
-                                    <p>Uploading... {progressPercent}%</p>
+                    {hasPermission && (
+                        <>
+                            {isFileUploaded ? (
+                                <div className="ftext">File uploaded.</div>
+                            ) : !isClipboard ? (
+                                <input type="file" name="file" onChange={changeHandler} className="fileInput" />
+                            ) : (
+                                <div className="ftext">
+                                    <i>File supplied by message box clipboard paste.</i>
                                 </div>
-                            </div>
+                            )}
+
+                            {isFilePicked && selectedFile != null && !isFileUploaded && (
+                                <div className="fileinfo">
+                                    <br />
+                                    <p>
+                                        <i>File name:</i> {selectedFile.name} <br />
+                                        <i>Filetype:</i> {selectedFile.type || "unknown"} <br />
+                                        <i>Size in bytes:</i> {formatBytes(selectedFile.size)}
+                                    </p>
+                                    <p>
+                                        <b>Upload file?</b>
+                                    </p>
+                                    <div>
+                                        <button className="uploadButton" onClick={handleSubmission}>
+                                            Upload
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                            <br />
+                            {isFileUploading && !isFileUploaded && (
+                                <div className="barload">
+                                    <div className="outerload">
+                                        <div
+                                            className="innerload"
+                                            style={{
+                                                width: `${progressPercent}%`,
+                                            }}
+                                        >
+                                            <p>Uploading... {progressPercent}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    )}
+                    {!hasPermission && (
+                        <div className="ftext">
+                            <i>You do not have permission to upload files.</i>
                         </div>
                     )}
                 </div>

@@ -70,6 +70,7 @@ export interface UserData {
     admin: boolean;
     read: boolean;
     write: boolean;
+    upload: boolean;
     online:
         | boolean
         | {
@@ -239,6 +240,7 @@ export function useAuthStateChanged(): void {
                             read: false,
                             write: false,
                             admin: false,
+                            upload: false,
                         });
 
                         // Reload the window as the data collection methods may have already fired
@@ -259,9 +261,10 @@ export function isMessageOverLimit(message: string): boolean {
 
 // Change profanity level setting
 export async function changeAutomodThreshold(level: number): Promise<void> {
-    // Clip to be 0 <= level <= 1.0
+    // Clip to be 0 <= level <= 0.98
+    // This is because 1.0 actually never happens with the external API
     if (level < 0) level = 0;
-    if (level > 1) level = 1;
+    if (level > 0.98) level = 0.98;
     await set(ref(db, "settings/automod_threshold"), level);
 }
 
