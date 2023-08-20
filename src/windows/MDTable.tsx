@@ -15,7 +15,7 @@ function MDTable() {
     const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
     return (
-        <Popup ref={tref} trigger={<button className="bbqitem">Markdown Commands</button>} nested>
+        <Popup ref={tref} trigger={<button className="bbqitem">Markdown guide</button>} nested>
             <>
                 <div className="outer" onClick={tclose} />
                 <div className="inner">

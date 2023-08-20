@@ -49,7 +49,7 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 // Store what channel the user is currently in
-export let currentChannel = "main";
+export let currentChannel = localStorage.getItem("channel") || "main";
 
 export function setCurrentChannel(channel: string): void {
     const invalidChars = /[$#\[\]/.]/;
@@ -57,6 +57,7 @@ export function setCurrentChannel(channel: string): void {
         throw new Error("Invalid channel name!");
     }
     currentChannel = channel;
+    localStorage.setItem("channel", channel);
 }
 
 export async function removeChannel(channel: string): Promise<void> {

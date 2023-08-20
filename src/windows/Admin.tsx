@@ -156,7 +156,7 @@ function Admin() {
     return (
         <Popup
             ref={tref}
-            trigger={<button className="bbqitem">1500 Megabyte App-Managing Heavy Duty Super-Admin Super Panel</button>}
+            trigger={<button className="bbqitem">Application admin settings</button>}
             nested
         >
             <>

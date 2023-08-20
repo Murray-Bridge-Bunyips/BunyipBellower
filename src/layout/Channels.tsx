@@ -31,7 +31,13 @@ function Channels() {
             <h5>Channels</h5>
             <form onSubmit={(e) => {
                 e.preventDefault();
-                const newName = (document.getElementById("channelName") as HTMLInputElement);
+                const possibleTargets = document.getElementsByClassName("channelName") as HTMLCollectionOf<HTMLInputElement>;
+                let newName;
+                if (!possibleTargets[0].value && possibleTargets.length > 1) {
+                    newName = possibleTargets[1];
+                } else {
+                    newName = possibleTargets[0];
+                }
                 try {
                     if (newName.value.length > 24) {
                         alert("Channel name too long!");
@@ -46,7 +52,7 @@ function Channels() {
                     newName.value = "";
                 }
             }}>
-                <input type="text" id="channelName" placeholder="Enter a channel name" maxLength={24} />
+                <input type="text" className="channelName" placeholder="Enter a channel name" maxLength={24} />
             </form>
             {channels.map((channel) => { 
                 if (channel === "main") return;

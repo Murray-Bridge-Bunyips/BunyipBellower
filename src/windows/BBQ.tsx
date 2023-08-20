@@ -10,8 +10,10 @@ import Admin from "./Admin";
 // I could go for a
 import "../css/BBQ.css"; // bacon burger
 import "../css/CommonPopup.css";
+import { filterChange } from "../chat/MessageBar";
 import MDTable from "./MDTable";
 import About from "./About";
+import ChannelWindow from "./ChannelWindow";
 
 function BBQ() {
     const tref = useRef<PopupActions | null>(null);
@@ -21,7 +23,11 @@ function BBQ() {
         <Popup ref={tref} trigger={<svg className="bbqbtn" />} nested>
             <>
                 <div className="outer" onClick={tclose} />
-                <div className="inner inwin">
+                <div className="inner">
+                    <h2 className="text-center" style={{ width: "400px" }}>
+                        Options
+                    </h2>
+                    <hr />
                     <div className="buttonarea">
                         <About />
                     </div>
@@ -31,13 +37,46 @@ function BBQ() {
                     </div>
                     <hr />
                     <div className="buttonarea">
-                        <button onClick={() => alert("lol no")}>Enable Light Mode</button>
+                        <button
+                            onClick={() => {
+                                document.title = "light mode on";
+                                const elems = document.querySelectorAll("*") as NodeListOf<HTMLElement>;
+                                for (const elem of elems) {
+                                    elem.style.backgroundColor = "white";
+                                    elem.style.display = "none";
+                                }
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 3000);
+                            }}
+                        >
+                            Enable light mode
+                        </button>
                     </div>
                     <hr />
                     <div className="buttonarea">
                         <MDTable />
                     </div>
                     <hr />
+                    <div id="mobilebuttons">
+                        <br />
+                        <h5 className="text-center">Mobile options</h5>
+                        <hr />
+                        <div className="buttonarea">
+                            <ChannelWindow />
+                        </div>
+                        <hr />
+                        <div className="buttonarea">
+                            <button onClick={() => (document.getElementById("remote-open") as HTMLElement).click()}>
+                                See active users
+                            </button>
+                        </div>
+                        <hr />
+                        <div className="buttonarea">
+                            <button onClick={filterChange}>Change filter preference (currently {localStorage.getItem("filter") ? "off" : "on"})</button>
+                        </div>
+                        <hr />
+                    </div>
                 </div>
             </>
         </Popup>

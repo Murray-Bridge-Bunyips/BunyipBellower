@@ -35,6 +35,7 @@ function Users({online, offline, unknown}: {
                     {online.length} user(s) online
                 </div>
             </div>
+            <div id="remote-open" style={{ display: "none" }} onClick={topen}/>
             {online.length > 8 && <div className="extrausers">+{online.length - 8}</div>}
             {online.length <= 1 && <button className="onlyuser" onClick={topen}/>}
             <Popup ref={tref}>

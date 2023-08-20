@@ -59,7 +59,7 @@
     background-color: rgb(179, 48, 38);
 }
 
-#channelName {
+.channelName {
     width: 60%;
     padding: 12px 20px;
     margin: 8px 0;

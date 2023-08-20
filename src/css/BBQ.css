@@ -3,10 +3,6 @@
  *    Author: Lachlan Paul, 2023
  */
 
-.inwin {
-    height: 66% !important;
-}
-
 .bbqbtn {
     position: absolute;
     right: 15px;
@@ -42,4 +38,14 @@
 .bbqbtn:hover {
     background-color: rgba(122, 122, 128, 0.8);
     cursor: pointer;
+}
+
+#mobilebuttons {
+    display: none;
+}
+
+@media screen and (max-width: 950px) {
+    #mobilebuttons {
+        display: block;
+    }
 }

@@ -13,7 +13,7 @@ function About() {
     const tref = useRef<PopupActions | null>(null);
     const tclose = () => tref.current?.close();
     return (
-        <Popup ref={tref} trigger={<button className="bbqitem">About Application</button>} nested>
+        <Popup ref={tref} trigger={<button className="bbqitem">About this application</button>} nested>
             <>
                 <div className="outer" onClick={tclose} />
                 <div className="inner">
@@ -72,7 +72,7 @@ function About() {
                         <img
                             title="Source code"
                             alt="GitHub source"
-                            src="https://github.githubassets.com/favicons/favicon-dark.png"
+                            src="/gh.png"
                             onClick={() =>
                                 window.open("https://github.com/Murray-Bridge-Bunyips/BunyipBellower", "_blank")
                             }
@@ -81,31 +81,31 @@ function About() {
                         <img
                             title="React"
                             alt="React"
-                            src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+                            src="/react.svg"
                             onClick={() => window.open("https://reactjs.org/", "_blank")}
                         />
                         <img
                             title="TypeScript"
                             alt="TypeScript"
-                            src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"
+                            src="/ts.svg"
                             onClick={() => window.open("https://www.typescriptlang.org/", "_blank")}
                         />
                         <img
                             title="Vite"
                             alt="Vite"
-                            src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Vitejs-logo.svg"
+                            src="/vite.svg"
                             onClick={() => window.open("https://vitejs.dev/", "_blank")}
                         />
                         <img
                             title="Firebase"
                             alt="Firebase"
-                            src="https://firebase.google.com/static/downloads/brand-guidelines/SVG/logo-logomark.svg"
+                            src="/fb.svg"
                             onClick={() => window.open("https://firebase.google.com/", "_blank")}
                         />
                         <img
                             title="Bootstrap"
                             alt="Bootstrap"
-                            src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg"
+                            src="/bs.svg"
                             onClick={() => window.open("https://getbootstrap.com/", "_blank")}
                         />
                     </div>

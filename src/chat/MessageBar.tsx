@@ -10,6 +10,26 @@ import FileUploads from "./FileUploads";
 import Scroll from "../layout/Scroll";
 import { auth, getData, isMessageOverLimit, toCommas, uploadMsg, UserData } from "../Firebase";
 
+// Change the filter preference of the user
+export function filterChange() {
+    if (
+        !window.confirm(
+            "Change your profanity filter preference? This will reload your page."
+        )
+    )
+        return;
+
+    const filterPref = localStorage.getItem("filter");
+    if (filterPref === "false") {
+        localStorage.setItem("filter", "true");
+    } else {
+        localStorage.setItem("filter", "false");
+    }
+
+    // Refresh the page to apply the filter
+    window.location.reload();
+}
+
 function MessageBar() {
     const [formVal, setFormVal] = useState("");
     const [timestamp, setLastTimestamp] = useState<number>(Date.now());
@@ -63,26 +83,6 @@ function MessageBar() {
         if (isMessageOverLimit(formVal))
             if (window.confirm("Caution! You have exceeded the 4000 character limit and will not be able to send your message! Trim message?"))
                 setFormVal(formVal.substring(0, 4000));
-    }
-
-    // Change the filter preference of the user
-    function filterChange() {
-        if (
-            !window.confirm(
-                "Change your profanity filter preference? This will reload your page."
-            )
-        )
-            return;
-
-        const filterPref = localStorage.getItem("filter");
-        if (filterPref === "false") {
-            localStorage.setItem("filter", "true");
-        } else {
-            localStorage.setItem("filter", "false");
-        }
-
-        // Refresh the page to apply the filter
-        window.location.reload();
     }
 
     return (
