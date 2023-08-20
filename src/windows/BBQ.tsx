@@ -73,7 +73,7 @@ function BBQ() {
                         </div>
                         <hr />
                         <div className="buttonarea">
-                            <button onClick={filterChange}>Change filter preference (currently {!localStorage.getItem("filter") ? "on" : "off"})</button>
+                            <button onClick={filterChange}>Change filter preference (currently {localStorage.getItem("filter") === "false" ? "off" : "on"})</button>
                         </div>
                         <hr />
                     </div>
