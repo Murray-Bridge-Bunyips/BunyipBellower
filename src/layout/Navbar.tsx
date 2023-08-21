@@ -30,9 +30,7 @@ function Navbar() {
             date.setTime(Date.now());
             setCurrentTime(date.toLocaleTimeString("en-AU", { hour12: true }));
         }, 1000);
-        return () => {
-            clearInterval(timer);
-        };
+        return () => clearInterval(timer);
     }, []);
 
     /*
@@ -66,9 +64,13 @@ function Navbar() {
                 allOffline.push(user[1]);
             }
         });
-        setOnlineUsers(allOnline);
-        setOfflineUsers(allOffline);
-        setUnknownUsers(allUnknown);
+        // Debounce the setting of the state to prevent unnecessary rerenders
+        const debounceTimeout = setTimeout(() => {
+            setOnlineUsers(allOnline);
+            setOfflineUsers(allOffline);
+            setUnknownUsers(allUnknown);
+        }, 1000);
+        return () => clearTimeout(debounceTimeout);
     }, [userData]);
 
     return (

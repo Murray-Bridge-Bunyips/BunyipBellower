@@ -135,24 +135,22 @@ function Message(props: { isAdmin: boolean; message: MessageData; key: string })
                             </p>
                         ) : message.uid === auth.currentUser?.uid ? (
                             <>
-                                <p className="text">
-                                    <div className="waiting">
+                                <div className="text">
+                                    <p className="waiting">
                                         <i>
                                             Your message content is currently not visible as it has not been reviewed.
                                             <br />
                                             Please wait for an admin to review it.
                                         </i>
                                         <br />
-                                    </div>
+                                    </p>
                                     {messageText}
-                                </p>
+                                </div>
                             </>
                         ) : (
-                            <>
-                                <p className="text">
-                                    <i>&lt;under review&gt;</i>
-                                </p>
-                            </>
+                            <p className="text">
+                                <i>&lt;under review&gt;</i>
+                            </p>
                         )
                     ) : (
                         <p className="text">{messageText}</p>

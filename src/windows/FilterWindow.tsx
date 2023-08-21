@@ -67,7 +67,6 @@ function FilterWindow() {
         if (index > -1) {
             oldStorage.splice(index, 1);
             localStorage.setItem("filterlist", JSON.stringify(oldStorage));
-            oldStorage[oldStorage.length - 1]
             setBlacklist(oldStorage);
         }
     }
