@@ -1,0 +1,45 @@
+/*
+ *    Styles for the filter menu.
+ *    Author: Lucas Bubner, 2023
+ */
+
+.filter-on,
+.filter-off {
+    /* remove the god awful default button scheme */
+    background: none;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    outline: inherit;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.filter-on {
+    background-color: rgb(94, 255, 0);
+}
+
+.filter-on:hover {
+    background-color: rgb(70, 170, 10);
+}
+
+.filter-off {
+    background-color: rgb(119, 0, 0);
+}
+
+.filter-off:hover {
+    background-color: rgb(179, 48, 38);
+}
+
+.ftitle {
+    padding: 12px;
+    width: 300px;
+}
+
+#filtered {
+    overflow-y: auto;
+    max-height: 200px;
+}

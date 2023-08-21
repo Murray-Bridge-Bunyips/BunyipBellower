@@ -8,6 +8,7 @@ import "../css/MessageBar.css";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import FileUploads from "./FileUploads";
 import Scroll from "../layout/Scroll";
+import FilterWindow from "../windows/FilterWindow";
 import { auth, getData, isMessageOverLimit, toCommas, uploadMsg, UserData } from "../Firebase";
 
 // Change the filter preference of the user
@@ -102,18 +103,7 @@ function MessageBar() {
                                 disabled={formLock}
                                 style={{ fontStyle: formLock ? "italic" : "normal" }}
                             />
-                            <img
-                                className="filterbutton"
-                                src={
-                                    localStorage.getItem("filter") === "false"
-                                        ? "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNTEyLjAwMDAwMHB0IiBoZWlnaHQ9IjUxMi4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDUxMi4wMDAwMDAgNTEyLjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgoKPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsNTEyLjAwMDAwMCkgc2NhbGUoMC4xMDAwMDAsLTAuMTAwMDAwKSIKZmlsbD0iI2VkMWMyNCIgc3Ryb2tlPSJub25lIj4KPHBhdGggZD0iTTY1NSA0MzcxIGMtMjIgLTEwIC00OCAtMjcgLTU3IC0zNyAtNDUgLTUxIC02MSAtMTUwIC0zNCAtMjAyIDggLTE1CjMzNyAtMzQ5IDczMCAtNzQyIGw3MTYgLTcxNSAwIC03MTMgYzAgLTYyMCAyIC03MTcgMTUgLTc1MCAxOSAtNDUgNzcyIC04MDQKODIxIC04MjcgMzcgLTE3IDExMCAtMjAgMTUxIC00IDQyIDE1IDkyIDY4IDEwMyAxMDkgNiAyMiAxMCA0MzUgMTAgMTExMCBsMAoxMDc1IDcxNiA3MTUgYzM5MyAzOTMgNzIyIDcyNyA3MzAgNzQyIDI5IDU2IDcgMTY2IC00MiAyMTAgLTU3IDUxIDQ4IDQ4Ci0xOTU2IDQ4IC0xNzg2IDAgLTE4NjUgLTEgLTE5MDMgLTE5eiIvPgo8L2c+Cjwvc3ZnPgo="
-                                        : "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNTEyLjAwMDAwMHB0IiBoZWlnaHQ9IjUxMi4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDUxMi4wMDAwMDAgNTEyLjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgoKPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsNTEyLjAwMDAwMCkgc2NhbGUoMC4xMDAwMDAsLTAuMTAwMDAwKSIKZmlsbD0iIzAwZmYwOCIgc3Ryb2tlPSJub25lIj4KPHBhdGggZD0iTTY1NSA0MzcxIGMtMjIgLTEwIC00OCAtMjcgLTU3IC0zNyAtNDUgLTUxIC02MSAtMTUwIC0zNCAtMjAyIDggLTE1CjMzNyAtMzQ5IDczMCAtNzQyIGw3MTYgLTcxNSAwIC03MTMgYzAgLTYyMCAyIC03MTcgMTUgLTc1MCAxOSAtNDUgNzcyIC04MDQKODIxIC04MjcgMzcgLTE3IDExMCAtMjAgMTUxIC00IDQyIDE1IDkyIDY4IDEwMyAxMDkgNiAyMiAxMCA0MzUgMTAgMTExMCBsMAoxMDc1IDcxNiA3MTUgYzM5MyAzOTMgNzIyIDcyNyA3MzAgNzQyIDI5IDU2IDcgMTY2IC00MiAyMTAgLTU3IDUxIDQ4IDQ4Ci0xOTU2IDQ4IC0xNzg2IDAgLTE4NjUgLTEgLTE5MDMgLTE5eiIvPgo8L2c+Cjwvc3ZnPgo="
-                                }
-                                width="50"
-                                height="50"
-                                alt="Filter Button"
-                                onClick={filterChange}
-                            />
+                            <FilterWindow />
                             {/* Submit button for messages, also prevents sending if there is no form value */}
                             <button
                                 type="submit"

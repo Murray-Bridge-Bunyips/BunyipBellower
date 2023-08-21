@@ -23,6 +23,8 @@ export const getFileURL = (fileURL: string) => {
 };
 
 const filter = new Filter({ placeHolder: "♥" });
+const customWords = localStorage.getItem("filterlist");
+if (customWords) filter.addWords(...JSON.parse(customWords));
 
 function Message(props: { isAdmin: boolean; message: MessageData; key: string }) {
     const { message } = props;
@@ -82,8 +84,8 @@ function Message(props: { isAdmin: boolean; message: MessageData; key: string })
                 <img
                     className="pfp"
                     src={message.photoURL}
-                    onError={() => {
-                        (document.getElementsByClassName("pfp")[0] as HTMLImageElement).src =
+                    onError={(e) => {
+                        e.currentTarget.src =
                             "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjg4IiBoZWlnaHQ9IjI4OCIgdmlld0JveD0iMCAwIDI4OCAyODgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODgiIGhlaWdodD0iMjg4IiBmaWxsPSIjRTlFOUU5Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjIyIDEwOUMyMjIgMTM5LjM2NiAyMDQuNjQ3IDE2NS42OCAxNzkuMzE3IDE3OC41NjVDMjIzLjk4MSAxODcuNzE4IDI2Mi40NDMgMjEzLjg4NiAyODcuNjMzIDI1MEgyODhWMjg4SDBWMjUwSDAuMzY3MTg4QzI1LjU1NzQgMjEzLjg4NiA2NC4wMTkzIDE4Ny43MTggMTA4LjY4MyAxNzguNTY1QzgzLjM1MjggMTY1LjY4IDY2IDEzOS4zNjYgNjYgMTA5QzY2IDY1LjkyMTkgMTAwLjkyMiAzMSAxNDQgMzFDMTg3LjA3OCAzMSAyMjIgNjUuOTIxOSAyMjIgMTA5WiIgZmlsbD0iIzAwMDAwMCIvPgo8L3N2Zz4K";
                     }}
                     alt={`Profile of ${message.displayName}`}

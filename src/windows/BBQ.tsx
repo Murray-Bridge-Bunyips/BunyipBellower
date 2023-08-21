@@ -10,7 +10,6 @@ import Admin from "./Admin";
 // I could go for a
 import "../css/BBQ.css"; // bacon burger
 import "../css/CommonPopup.css";
-import { filterChange } from "../chat/MessageBar";
 import MDTable from "./MDTable";
 import About from "./About";
 import ChannelWindow from "./ChannelWindow";
@@ -73,7 +72,7 @@ function BBQ() {
                         </div>
                         <hr />
                         <div className="buttonarea">
-                            <button onClick={filterChange}>Change filter preference (currently {localStorage.getItem("filter") === "false" ? "off" : "on"})</button>
+                            <button onClick={() => (document.getElementById("remote-open-filter") as HTMLElement).click()}>Change filter settings (currently {localStorage.getItem("filter") === "false" ? "off" : "on"})</button>
                         </div>
                         <hr />
                     </div>
