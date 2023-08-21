@@ -82,6 +82,13 @@ function Chat() {
         return () => unsubscribe();
     }, [channel]);
 
+    // If the user hasn't specified whether they want notifications, ask them
+    useEffect(() => {
+        if (Notification.permission == "default"){
+            Notification.requestPermission();
+        }
+      }, []);
+
     // Set custom properties on a dummy object allow messages to appear fluidly
     const dummy = createRef<HTMLDivElement>();
     const lastMessage = useRef<number>();
@@ -151,6 +158,10 @@ function Chat() {
         if (newMessage && hidden) {
             document.title = "NEW MESSAGE!";
             if (favicon) favicon.href = "alert.ico";
+                // If notifications are allowed to be sent, send one
+                if (Notification.permission == "granted"){
+                    const notification = new Notification("A new message has been sent!");
+                }
         } else {
             document.title = "Bunyip Bellower";
             if (favicon) favicon.href = "favicon.ico";
