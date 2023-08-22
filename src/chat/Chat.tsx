@@ -160,7 +160,10 @@ function Chat() {
             if (favicon) favicon.href = "alert.ico";
                 // If notifications are allowed to be sent, send one
                 if (Notification.permission == "granted"){
-                    const notification = new Notification("A new message has been sent!");
+                    const lastMessage = Object.values(messages)[Object.keys(messages).length - 1];
+                    const notification = new Notification(lastMessage.displayName + "\n" + lastMessage.text, {
+                        icon: lastMessage.photoURL
+                    });
                 }
         } else {
             document.title = "Bunyip Bellower";
