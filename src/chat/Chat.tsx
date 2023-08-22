@@ -204,7 +204,10 @@ function Chat() {
                                 Object.keys(messages).length > 0 &&
                                 Object.entries(messages)
                                     .slice(paginationIndex * -PAGINATION_LIMIT)
-                                    .map(([muid, msg]) => <Message isAdmin={adminPerms} message={msg} key={muid} />)}
+                                    .map(([muid, msg]) => {
+                                        const shouldGroup = false;
+                                        return <Message isAdmin={adminPerms} message={msg} key={muid} shouldGroup={shouldGroup} />;
+                                    })}
                             {/* Dummy element for fluid interface */}
                             <div id="dummy" ref={dummy}></div>
                             <br /> <br /> <br />

@@ -26,9 +26,10 @@ const filter = new Filter({ placeHolder: "♥" });
 const customWords = localStorage.getItem("filterlist");
 if (customWords) filter.addWords(...JSON.parse(customWords));
 
-function Message(props: { isAdmin: boolean; message: MessageData; key: string }) {
+function Message(props: { isAdmin: boolean; shouldGroup: boolean; message: MessageData; key: string }) {
     const { message } = props;
     const isAdmin = props.isAdmin;
+    const shouldGroup = props.shouldGroup;
     const [isHovering, setIsHovering] = useState(false);
     const handleMouseOver = () => setIsHovering(true);
     const handleMouseOut = () => setIsHovering(false);
@@ -79,38 +80,36 @@ function Message(props: { isAdmin: boolean; message: MessageData; key: string })
             onMouseOver={handleMouseOver}
             onMouseOut={handleMouseOut}
         >
-            {/* Generate profile picture based on the photoURL attached with the message */}
-            {message.photoURL !== "sys" && (
-                <img
-                    className="pfp"
-                    src={message.photoURL}
-                    onError={(e) => {
-                        e.currentTarget.src =
-                            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjg4IiBoZWlnaHQ9IjI4OCIgdmlld0JveD0iMCAwIDI4OCAyODgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODgiIGhlaWdodD0iMjg4IiBmaWxsPSIjRTlFOUU5Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjIyIDEwOUMyMjIgMTM5LjM2NiAyMDQuNjQ3IDE2NS42OCAxNzkuMzE3IDE3OC41NjVDMjIzLjk4MSAxODcuNzE4IDI2Mi40NDMgMjEzLjg4NiAyODcuNjMzIDI1MEgyODhWMjg4SDBWMjUwSDAuMzY3MTg4QzI1LjU1NzQgMjEzLjg4NiA2NC4wMTkzIDE4Ny43MTggMTA4LjY4MyAxNzguNTY1QzgzLjM1MjggMTY1LjY4IDY2IDEzOS4zNjYgNjYgMTA5QzY2IDY1LjkyMTkgMTAwLjkyMiAzMSAxNDQgMzFDMTg3LjA3OCAzMSAyMjIgNjUuOTIxOSAyMjIgMTA5WiIgZmlsbD0iIzAwMDAwMCIvPgo8L3N2Zz4K";
-                    }}
-                    alt={`Profile of ${message.displayName}`}
-                    referrerPolicy="no-referrer"
-                />
+            {!shouldGroup && (
+                <>
+                    {message.photoURL !== "sys" && (
+                        <img
+                            className="pfp"
+                            src={message.photoURL}
+                            onError={(e) => {
+                                e.currentTarget.src =
+                                    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjg4IiBoZWlnaHQ9IjI4OCIgdmlld0JveD0iMCAwIDI4OCAyODgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODgiIGhlaWdodD0iMjg4IiBmaWxsPSIjRTlFOUU5Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjIyIDEwOUMyMjIgMTM5LjM2NiAyMDQuNjQ3IDE2NS42OCAxNzkuMzE3IDE3OC41NjVDMjIzLjk4MSAxODcuNzE4IDI2Mi40NDMgMjEzLjg4NiAyODcuNjMzIDI1MEgyODhWMjg4SDBWMjUwSDAuMzY3MTg4QzI1LjU1NzQgMjEzLjg4NiA2NC4wMTkzIDE4Ny43MTggMTA4LjY4MyAxNzguNTY1QzgzLjM1MjggMTY1LjY4IDY2IDEzOS4zNjYgNjYgMTA5QzY2IDY1LjkyMTkgMTAwLjkyMiAzMSAxNDQgMzFDMTg3LjA3OCAzMSAyMjIgNjUuOTIxOSAyMjIgMTA5WiIgZmlsbD0iIzAwMDAwMCIvPgo8L3N2Zz4K";
+                            }}
+                            alt={`Profile of ${message.displayName}`}
+                            referrerPolicy="no-referrer"
+                        />
+                    )}
+                    <div className="namedate">
+                        <p className="name">
+                            <b>{message.displayName}</b>
+                        </p>
+                        {message.photoURL !== "sys" && (
+                            <p className="date">
+                                {timestamp.toLocaleString("en-AU", { hour12: true })} {message.autoMod ? "[AutoMod]" : ""}{" "}
+                                {message.reviewed ? "[reviewed]" : ""}
+                            </p>
+                        )}
+                    </div>
+                </>
             )}
-            <div className="namedate">
-                <p className="name">
-                    <b>{message.displayName}</b>
-                </p>
 
-                {/* Display the proper formatted date and time metadata with each message */}
-                {message.photoURL !== "sys" && (
-                    <p className="date">
-                        {timestamp.toLocaleString("en-AU", { hour12: true })} {message.autoMod ? "[AutoMod]" : ""}{" "}
-                        {message.reviewed ? "[reviewed]" : ""}
-                    </p>
-                )}
-            </div>
-
-            {/* If the message is declared as retracted, do not display the message content whatsoever. */}
             {!message.isRetracted ? (
                 message.isMsg ? (
-                    // If it is a normal message, pass it through ReactMarkdown which will auto hyperlink any links, and add markdown
-                    // Ensure to not pass through markdown if the message is a system message
                     message.photoURL !== "sys" ? (
                         !message.autoMod ? (
                             <ReactMarkdown className="text" remarkPlugins={[gfm]} linkTarget="_blank">
@@ -156,12 +155,8 @@ function Message(props: { isAdmin: boolean; message: MessageData; key: string })
                         <p className="text">{messageText}</p>
                     )
                 ) : (
-                    // Otherwise, it must be a file and we can display the downloadURL depending on it's type
-                    // The type for the URL is prepended to the downloadURL with a colon
                     <div className="file">
-                        {/* Use file format to determine if we can outright display the downloadURL in an img, video, etc. tag */}
                         {getFileFormat(message.text).startsWith("image") ? (
-                            // If we can display the image through an img tag, define a height maximum and render it
                             <img
                                 onClick={() => window.open(getFileURL(message.text), "_blank")}
                                 src={getFileURL(message.text)}
@@ -169,15 +164,12 @@ function Message(props: { isAdmin: boolean; message: MessageData; key: string })
                                 className="fileimage"
                             />
                         ) : getFileFormat(message.text).startsWith("video") ? (
-                            // Swapped to using a video tag instead of an iframe, it seems to work now...
-                            // prettier-ignore
                             <video
                                 controls
                                 src={getFileURL(message.text)}
                                 className="filevideo"
                             />
                         ) : getFileFormat(message.text).startsWith("audio") ? (
-                            // Display an audio file as an audio element if we can.
                             <audio
                                 controls
                                 src={getFileURL(message.text)}
@@ -186,8 +178,6 @@ function Message(props: { isAdmin: boolean; message: MessageData; key: string })
                                 className="fileaudio"
                             />
                         ) : (
-                            // Fallback view file attachment to each file upload incase of an unknown file type
-                            // prettier-ignore
                             <a target="_blank" rel="noreferrer" href={getFileURL(message.text)}>
                                 <b>
                                     View {getFileFormat(message.text) || "unknown"} file uploaded
