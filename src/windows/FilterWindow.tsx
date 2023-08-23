@@ -47,9 +47,8 @@ function FilterWindow() {
             if (oldStorage.includes(word.value)) return;
             oldStorage.push(word.value);
             localStorage.setItem("filterlist", JSON.stringify(oldStorage));
-            // Edit the last item to include (reload required) for the end user
-            oldStorage[oldStorage.length - 1] = word.value + " (reload required)";
-            setBlacklist(oldStorage);
+            // Edit all the words to include the reload required message
+            setBlacklist(oldStorage.map((w: string) => w + " (reload required)"));
         } finally {
             word.value = "";
         }
@@ -67,7 +66,7 @@ function FilterWindow() {
         if (index > -1) {
             oldStorage.splice(index, 1);
             localStorage.setItem("filterlist", JSON.stringify(oldStorage));
-            setBlacklist(oldStorage);
+            setBlacklist(oldStorage.map((w: string) => w + " (reload required)"));
         }
     }
 
