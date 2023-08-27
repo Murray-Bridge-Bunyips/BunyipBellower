@@ -6,7 +6,7 @@
  */
 
 import { auth, db, getData, MessageData, toCommas, currentChannel } from "../Firebase";
-import { createRef, useEffect, useRef, useState } from "react";
+import { createRef, useEffect, useMemo, useRef, useState } from "react";
 import { onValue, ref } from "firebase/database";
 import Message from "./Message";
 import Navbar from "../layout/Navbar";
@@ -150,21 +150,48 @@ function Chat() {
         }
     }, [hidden, messages]);
 
+    // Sets a timer used by the notification system so that SFX aren't played on every new message
+    const [notifLock, setNotifLock] = useState(false);
+    useEffect(() => {
+        const notifTimeout = () => {
+            setNotifLock(false);
+        };
+        setInterval(notifTimeout, 120000);
+
+        })
+
+        // Pre-loads the notification sound effect
+        const [sfx, setSfx] = useState<HTMLAudioElement>(new Audio("/battery_pickup.wav"));
+        useMemo(() => {
+            sfx.load();
+        }, [sfx]);
+
     // Change the title and favicon in the event that both:
     // a) A confirmed new message that conforms to the new message hook criteria exists
     // b) The user is not currently on the page and cannot see the current messages
+    // This also sends a browser notification, with a sound effect (from HL2 ofc)
     useEffect(() => {
         const favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement;
         if (newMessage && hidden) {
             document.title = "NEW MESSAGE!";
             if (favicon) favicon.href = "alert.ico";
-                // If notifications are allowed to be sent, send one
-                if (Notification.permission == "granted"){
-                    const lastMessage = Object.values(messages)[Object.keys(messages).length - 1];
-                    const notification = new Notification(lastMessage.displayName + "\n" + lastMessage.text, {
-                        icon: lastMessage.photoURL
-                    });
-                }
+
+            // If the timer is up, play a sound effect on next notification
+            if (notifLock) {
+                const snd = new Audio("/battery_pickup.wav");
+                sfx.play();
+                sfx.currentTime=0;
+                setNotifLock(true)
+            }
+            
+            // If notifications are allowed to be sent, send one
+            if (Notification.permission == "granted"){
+                const lastMessage = Object.values(messages)[Object.keys(messages).length - 1];
+                const notification = new Notification(lastMessage.displayName + "\n" + lastMessage.text, {
+                    icon: lastMessage.photoURL,
+                    silent: true
+                });
+            }
         } else {
             document.title = "Bunyip Bellower";
             if (favicon) favicon.href = "favicon.ico";
