@@ -175,14 +175,6 @@ function Chat() {
         if (newMessage && hidden) {
             document.title = "NEW MESSAGE!";
             if (favicon) favicon.href = "alert.ico";
-
-            // If the timer is up, play a sound effect on next notification
-            if (notifLock) {
-                const snd = new Audio("/battery_pickup.wav");
-                sfx.play();
-                sfx.currentTime=0;
-                setNotifLock(true)
-            }
             
             // If notifications are allowed to be sent, send one
             if (Notification.permission == "granted"){
@@ -191,6 +183,12 @@ function Chat() {
                     icon: lastMessage.photoURL,
                     silent: true
                 });
+                // If the timer is up, play a sound effect on next notification
+                if (!notifLock) {
+                    sfx.play();
+                    sfx.currentTime=0;
+                    setNotifLock(true)
+                }
             }
         } else {
             document.title = "Bunyip Bellower";
