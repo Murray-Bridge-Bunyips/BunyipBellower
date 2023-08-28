@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/bad-words": "^3.0.1",
     "@vitejs/plugin-react": "^3.0.1",
-    "vite": "^4.4.8"
+    "vite": "^4.4.8",
+    "vite-plugin-node-polyfills": "^0.11.3"
   }
 }
