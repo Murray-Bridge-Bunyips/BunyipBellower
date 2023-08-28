@@ -93,9 +93,9 @@ function FileUploads() {
 
                 for (let i = 0; i < predictions.length; i++) {
                     for (let j = 0; j < predictions[i].length; j++) {
-                        // If any of the negative predictions are above 75%, reject the file
+                        // If any of the negative predictions are above 15%, reject the file
                         const { probability, className } = predictions[i][j];
-                        if (probability > 0.75 && className !== "Neutral" && className !== "Drawing") {
+                        if (probability > 0.15 && className !== "Neutral" && className !== "Drawing") {
                             console.debug(`Rejected file due to ${className} with probability ${probability}`);
                             return { className, probability };
                         }
