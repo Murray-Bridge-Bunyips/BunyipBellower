@@ -8,6 +8,7 @@
 import { useMemo, useState } from "react";
 import { auth, MessageData, updateMsg } from "../Firebase";
 import Msgman from "./Msgman";
+import FileViewer from "./FileViewer";
 import "../css/App.css";
 import "../css/Message.css";
 import ReactMarkdown from "react-markdown";
@@ -100,8 +101,8 @@ function Message(props: { isAdmin: boolean; shouldGroup: boolean; message: Messa
                         </p>
                         {message.photoURL !== "sys" && (
                             <p className="date">
-                                {timestamp.toLocaleString("en-AU", { hour12: true })} {message.autoMod ? "[AutoMod]" : ""}{" "}
-                                {message.reviewed ? "[reviewed]" : ""}
+                                {timestamp.toLocaleString("en-AU", { hour12: true })}{" "}
+                                {message.autoMod ? "[AutoMod]" : ""} {message.reviewed ? "[reviewed]" : ""}
                             </p>
                         )}
                     </div>
@@ -148,44 +149,65 @@ function Message(props: { isAdmin: boolean; shouldGroup: boolean; message: Messa
                             </>
                         ) : (
                             <p className="text">
-                                <i>&lt;under review&gt;</i>
+                                <i>&lt;message under review&gt;</i>
                             </p>
                         )
                     ) : (
                         <p className="text">{messageText}</p>
                     )
-                ) : (
+                ) : !message.autoMod ? (
                     <div className="file">
-                        {getFileFormat(message.text).startsWith("image") ? (
-                            <img
-                                onClick={() => window.open(getFileURL(message.text), "_blank")}
-                                src={getFileURL(message.text)}
-                                alt={`Upload by ${message.displayName}`}
-                                className="fileimage"
-                            />
-                        ) : getFileFormat(message.text).startsWith("video") ? (
-                            <video
-                                controls
-                                src={getFileURL(message.text)}
-                                className="filevideo"
-                            />
-                        ) : getFileFormat(message.text).startsWith("audio") ? (
-                            <audio
-                                controls
-                                src={getFileURL(message.text)}
-                                autoPlay={false}
-                                title={`Audio upload by ${message.displayName}`}
-                                className="fileaudio"
-                            />
-                        ) : (
-                            <a target="_blank" rel="noreferrer" href={getFileURL(message.text)}>
-                                <b>
-                                    View {getFileFormat(message.text) || "unknown"} file uploaded
-                                    by {message.displayName}
-                                </b>
-                            </a>
-                        )}
+                        <FileViewer
+                            key={message.text}
+                            url={getFileURL(message.text)}
+                            format={getFileFormat(message.text)}
+                            displayName={message.displayName}
+                        />
                     </div>
+                ) : isAdmin ? (
+                    <p className="text automod">
+                        <h4>AutoMod flagged.</h4>
+                        File requires a review and is currently only visible to administrators. <br /> <br />
+                        <strong>ACTIONS</strong>{" "}
+                        <button className="allow" onClick={allow}>
+                            Allow
+                        </button>{" "}
+                        <button className="deny" onClick={deny}>
+                            Retract
+                        </button>{" "}
+                        <br />
+                        <i>Triggered by: {message.autoModProb}</i> <br /> <br />
+                        <b>File:</b> <br />
+                        <FileViewer
+                            key={message.text}
+                            url={getFileURL(message.text)}
+                            format={getFileFormat(message.text)}
+                            displayName={message.displayName}
+                        />
+                    </p>
+                ) : message.uid === auth.currentUser?.uid ? (
+                    <>
+                        <div className="text">
+                            <p className="waiting">
+                                <i>
+                                    Your file is currently not visible as it has not been reviewed.
+                                    <br />
+                                    Please wait for an admin to review it.
+                                </i>
+                                <br />
+                            </p>
+                            <FileViewer
+                                key={message.text}
+                                url={getFileURL(message.text)}
+                                format={getFileFormat(message.text)}
+                                displayName={message.displayName}
+                            />
+                        </div>
+                    </>
+                ) : (
+                    <p className="text">
+                        <i>&lt;file under review&gt;</i>
+                    </p>
                 )
             ) : (
                 <p className="text">

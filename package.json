@@ -14,6 +14,7 @@
     "@types/react-router-dom": "^5.3.3",
     "bad-words": "^3.0.4",
     "firebase": "^9.15.0",
+    "nsfwjs": "^2.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@types/bad-words": "^3.0.1",
     "@vitejs/plugin-react": "^3.0.1",
-    "vite": "^4.4.8"
+    "vite": "^4.4.8",
+    "vite-plugin-node-polyfills": "^0.11.3"
   }
 }

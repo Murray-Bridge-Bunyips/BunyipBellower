@@ -326,9 +326,11 @@ export async function uploadMsg(formVal: string): Promise<void> {
     }).catch((error) => errorHandler(error));
 }
 
-export async function uploadFileMsg(url: string, type: string): Promise<void> {
+export async function uploadFileMsg(url: string, type: string, cleanUpload: object | true): Promise<void> {
     const msgID = push(child(ref(db), "messages")).key;
     await set(ref(db, `messages/${currentChannel}/` + msgID), {
+        autoMod: cleanUpload instanceof Object,
+        autoModProb: cleanUpload instanceof Object ? JSON.stringify(cleanUpload) : "n/a",
         isMsg: false,
         isRetracted: false,
         id: msgID,
