@@ -7,11 +7,13 @@ import { ChangeEventHandler, ClipboardEvent, useCallback, useEffect, useRef, use
 import { auth, storage, uploadFileMsg, getData, toCommas } from "../Firebase";
 import { getDownloadURL, ref, uploadBytesResumable, UploadTask, UploadTaskSnapshot } from "firebase/storage";
 import Popup from "reactjs-popup";
+import * as nsfwjs from "nsfwjs";
 import { PopupActions } from "reactjs-popup/dist/types";
 import "../css/FileUploads.css";
 import "../css/CommonPopup.css";
 
 function FileUploads() {
+    const [tf, setTf] = useState<nsfwjs.NSFWJS>();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isFilePicked, setIsFilePicked] = useState(false);
     const [progressPercent, setProgressPercent] = useState(0);
@@ -19,10 +21,14 @@ function FileUploads() {
     const [isFileUploaded, setIsFileUploaded] = useState(false);
     const [isClipboard, setIsClipboard] = useState(false);
     const [hasPermission, setHasPermission] = useState(false);
+    const [scanNotice, setScanNotice] = useState(false);
     useEffect(() => {
         getData("users", toCommas(auth.currentUser?.email!)).then((data) => {
             setHasPermission(data?.upload);
         });
+        // NSFWJS model is hosted externally, may break in the future
+        // https://github.com/infinitered/nsfwjs
+        nsfwjs.load().then((two) => setTf(two));
     }, []);
 
     const uploadTaskRef = useRef<UploadTask>();
@@ -49,6 +55,60 @@ function FileUploads() {
         );
     }
 
+    async function scanMedia(file: File): Promise<object | true> {
+        let scanTarget: HTMLImageElement | HTMLVideoElement | null = null;
+        try {
+            if (file.type.startsWith("image/")) {
+                scanTarget = new Image();
+                scanTarget.src = URL.createObjectURL(file);
+                // TF requires a width and height to be set
+                scanTarget.width = 1920;
+                scanTarget.height = 1080;
+            }
+
+            if (file.type.startsWith("video/")) {
+                // Must scan over every frame of the video
+                scanTarget = document.createElement("video");
+                scanTarget.src = URL.createObjectURL(file);
+                scanTarget.width = 1920;
+                scanTarget.height = 1080;
+                scanTarget.muted = true;
+                await scanTarget.play();
+            }
+
+            if (scanTarget) {
+                let predictions: Array<Array<nsfwjs.predictionType>> = [];
+                if (file.type === "image/gif") {
+                    await tf?.classifyGif(scanTarget as HTMLImageElement).then((res) => (predictions = res));
+                } else if (file.type.startsWith("video/")) {
+                    scanTarget = scanTarget as HTMLVideoElement;
+                    predictions = [];
+                    // Scan every 10 milliseconds
+                    for (let i = 0; i < scanTarget.duration * 100; i++) {
+                        await tf?.classify(scanTarget).then((res) => predictions.push(res));
+                    }
+                } else {
+                    await tf?.classify(scanTarget).then((res) => predictions.push(res));
+                }
+
+                for (let i = 0; i < predictions.length; i++) {
+                    for (let j = 0; j < predictions[i].length; j++) {
+                        // If any of the negative predictions are above 75%, reject the file
+                        const { probability, className } = predictions[i][j];
+                        if (probability > 0.75 && className !== "Neutral" && className !== "Drawing") {
+                            console.debug(`Rejected file due to ${className} with probability ${probability}`);
+                            return { className, probability };
+                        }
+                    }
+                }
+            }
+
+            return true;
+        } finally {
+            scanTarget?.remove();
+        }
+    }
+
     const changeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
         if (!event.target.files) return;
         setSelectedFile(event.target.files[0]);
@@ -71,6 +131,8 @@ function FileUploads() {
         setIsFilePicked(false);
         setIsFileUploaded(false);
         setIsClipboard(false);
+        setScanNotice(false);
+        setProgressPercent(0);
     };
 
     const uploadFile = (name: string) => {
@@ -80,9 +142,22 @@ function FileUploads() {
             uploadTaskRef.current = uploadBytesResumable(storageRef, selectedFile);
     };
 
-    const handleSubmission = () => {
+    const handleSubmission = async () => {
         if (!isFilePicked || !selectedFile || !hasPermission) return;
         setIsFileUploading(true);
+
+        setScanNotice(true);
+        setProgressPercent(100);
+        // Convert the file into an image or video if applicable
+        const scan = await scanMedia(selectedFile);
+        if (scan instanceof Object) {
+            if (!confirm("Your file has been rejected as the content has been flagged.\nIf you wish to bypass this, the content will not be visible and will held for an admin for review.")) {
+                resetElement();
+                return;
+            }
+        }
+        setScanNotice(false);
+        setProgressPercent(0);
 
         // Generate a random string of characters to supplement the file name to avoid duplicates
         const fileName = generateUniqueFileName(selectedFile.name);
@@ -103,7 +178,7 @@ function FileUploads() {
                 // Handle uploading the file URL into a message doc
                 getDownloadURL(ref(storage, `files/${fileName}`))
                     .then((url) => {
-                        uploadFileMsg(url, selectedFile.type);
+                        uploadFileMsg(url, selectedFile.type, scan);
                     })
                     .catch((error) => {
                         console.error(error);
@@ -205,7 +280,13 @@ function FileUploads() {
                                                 width: `${progressPercent}%`,
                                             }}
                                         >
-                                            <p>Uploading... {progressPercent}%</p>
+                                            {!scanNotice ? (
+                                                <p>Uploading... {progressPercent}%</p>
+                                            ) : (
+                                                <p>
+                                                    <i>Scanning file for inappropriate content... Please wait.</i>
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
