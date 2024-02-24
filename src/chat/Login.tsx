@@ -43,7 +43,7 @@ function Login() {
                     <br /> <br />
                     <h6>
                         <b>Application developed by</b> <br />
-                        Lucas Bubner <a href="https://github.com/hololb/"> @hololb</a> <br />
+                        Lucas Bubner <a href="https://github.com/bubner/"> @bubner</a> <br />
                         Lachlan Paul <a href="https://github.com/BanjoTheBot/"> @BanjoTheBot</a> <br />
                     </h6>
                     <br />

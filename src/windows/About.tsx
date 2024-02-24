@@ -37,9 +37,9 @@ function About() {
                                         rel="noreferrer"
                                         target="_blank"
                                         className="ghlink"
-                                        href="https://github.com/hololb/"
+                                        href="https://github.com/bubner/"
                                     >
-                                        @hololb
+                                        @bubner
                                     </a>
                                 </td>
                                 <td>Lead programmer and backend manager</td>

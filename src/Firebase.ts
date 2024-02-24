@@ -279,7 +279,7 @@ export async function uploadMsg(formVal: string): Promise<void> {
         return;
     }
 
-    // Query the message profanity level with https://github.com/hololb/ProfanityAPI
+    // Query the message profanity level with https://github.com/bubner/ProfanityAPI
     let analysis = await Promise.race([
         fetch("https://profanityapi.vercel.app/?f=" + formVal)
             .then((res) => res.json())
