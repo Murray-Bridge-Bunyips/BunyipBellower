@@ -11,4 +11,4 @@ This project has since gone on to win the Student and Education category at the 
 - Firebase backend (Authentication, Realtime Database, Cloud Storage, Hosting)
 - lachlan paul css
 
-###### Copyright (c) Lucas Bubner [@bubner](https://github.com/bubner) & Lachlan Paul [@BanjoTheBot](https://github.com/BanjoTheBot), 2023, under the [MIT License](https://raw.githubusercontent.com/Murray-Bridge-Bunyips/BunyipBellower/prod/LICENSE).
+###### Copyright (c) Lucas Bubner [@bubner](https://github.com/bubner) & Lachlan Paul [@lachlanPaul](https://github.com/lachlanPaul), 2023, under the [MIT License](https://raw.githubusercontent.com/Murray-Bridge-Bunyips/BunyipBellower/prod/LICENSE).

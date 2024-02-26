@@ -44,7 +44,7 @@ function Login() {
                     <h6>
                         <b>Application developed by</b> <br />
                         Lucas Bubner <a href="https://github.com/bubner/"> @bubner</a> <br />
-                        Lachlan Paul <a href="https://github.com/BanjoTheBot/"> @BanjoTheBot</a> <br />
+                        Lachlan Paul <a href="https://github.com/lachlanPaul/"> @lachlanPaul</a> <br />
                     </h6>
                     <br />
                     <footer>

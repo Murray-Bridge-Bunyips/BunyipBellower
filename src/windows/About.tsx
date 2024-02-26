@@ -58,9 +58,9 @@ function About() {
                                         rel="noreferrer"
                                         target="_blank"
                                         className="ghlink"
-                                        href="https://github.com/BanjoTheBot/"
+                                        href="https://github.com/lachlanPaul/"
                                     >
-                                        @BanjoTheBot
+                                        @lachlanPaul
                                     </a>
                                 </td>
                                 <td>Application and frontend designer</td>
